@@ -22,3 +22,5 @@ cache
 keep.list
 *.iml
 password
+ip
+win_path
