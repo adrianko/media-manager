@@ -26,8 +26,8 @@ object MediaManager {
 
     def getStatus: String = {
         val host = if (System.getProperty("os.name").contains("Windows")) ex(ut.get("win_host")) else ex(ut.get("other_host"))
-        val url = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + host + ":8080/gui/?list=1&cid=0&getmsg=1"
-        Seq("wget", "-q", url + "&t=" + System.currentTimeMillis, "-O", cachePath + "download").!
+        val url = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + host + ":8080/gui/?list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+        Seq("wget", "-q", url, "-O", cachePath + "download").!
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
