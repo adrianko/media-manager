@@ -5,10 +5,7 @@ import java.io.File
 
 object MediaManager {
 
-    val sourceDir: String = "G:/Downloads/complete"
-    val keepList: String = "keep.list"
     val cachePath: String = new File(".").getCanonicalPath + "/cache/"
-
     val config: Map[String, String] = Map(fromFile("config").getLines().map(_.replace("\n", "").split("=")).map(line => line(0) -> line(1)).toList : _*)
 
     val ut: Map[String, String] = Map[String, String](
@@ -17,6 +14,10 @@ object MediaManager {
         "win_host" -> "localhost",
         "other_host" -> ex(config.get("ip"))
     )
+
+    val sourceDir: String = ex(config.get("video_dir"))
+    val keepList: String = ex(config.get("keep_list"))
+
 
     def ex(x: Option[String]) = x match {
         case Some(s) => s
