@@ -9,11 +9,13 @@ object MediaManager {
     val keepList: String = "keep.list"
     val cachePath: String = new File(".").getCanonicalPath + "/cache/"
 
+    val config: Map[String, String] = Map(fromFile("config").getLines().map(_.replace("\n", "").split("=")).map(line => line(0) -> line(1)).toList : _*)
+
     val ut: Map[String, String] = Map[String, String](
         "user" -> "root",
-        "pass" -> fromFile("password").getLines().toList.mkString(""),
+        "pass" -> ex(config.get("password")),
         "win_host" -> "localhost",
-        "other_host" -> fromFile("ip").getLines().toList.mkString("")
+        "other_host" -> ex(config.get("ip"))
     )
 
     def ex(x: Option[String]) = x match {

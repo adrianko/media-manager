@@ -15,12 +15,11 @@ project/plugins/project/
 # Scala-IDE specific
 .scala_dependencies
 .worksheet
+
 .idea
 lib
 info
 cache
 keep.list
 *.iml
-password
-ip
-win_path
+config
