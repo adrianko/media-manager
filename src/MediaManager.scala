@@ -30,14 +30,16 @@ object MediaManager {
 
     def main(args: Array[String]) {
         val keepListShows: collection.mutable.Map[String, Int] = collection.mutable.Map()
-        //val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
-        //sourceFiles.foreach((f: File) => println(f.getAbsoluteFile))
+        val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
+        if (System.getProperty("os.name").contains("Windows")) {
+            sourceFiles.foreach((f: File) => println(f.getAbsoluteFile))
+        }
 
         fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
             keepListShows += line(0) -> line(1).toInt
         })
 
-        for(i <- 1 to 10) {
+        for (i <- 1 to 10) {
             println(getStatus)
         }
 
