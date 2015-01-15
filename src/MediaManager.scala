@@ -30,7 +30,7 @@ object MediaManager {
 
     def main(args: Array[String]) {
         val keepListShows: collection.mutable.Map[String, Int] = collection.mutable.Map()
-        
+
         if (System.getProperty("os.name").contains("Windows")) {
             val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
         }
@@ -39,9 +39,7 @@ object MediaManager {
             keepListShows += line(0) -> line(1).toInt
         })
 
-        for (i <- 1 to 10) {
-            println(getStatus)
-        }
+        val jsonS = getStatus
 
     }
 
