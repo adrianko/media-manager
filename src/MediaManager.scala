@@ -12,7 +12,8 @@ object MediaManager {
     val ut: Map[String, String] = Map[String, String](
         "user" -> "root",
         "pass" -> fromFile("password").getLines().toList.mkString(""),
-        "host" -> "localhost:8080/gui"
+        "win_host" -> "localhost",
+        "other_host" -> fromFile("ip").getLines().toList.mkString("")
     )
 
     def ex(x: Option[String]) = x match {
@@ -21,7 +22,9 @@ object MediaManager {
     }
 
     def getStatus: String = {
-        val url = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + ex(ut.get("host")) + "/?list=1&cid=0&getmsg=1"
+
+        val host = if (System.getProperty("os.name").contains("Windows")) ex(ut.get("win_host")) else ex(ut.get("other_host"))
+        val url = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + host + ":8080/gui/?list=1&cid=0&getmsg=1"
         Seq("wget", "-q", url + "&t=" + System.currentTimeMillis, "-O", cachePath + "download").!
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
