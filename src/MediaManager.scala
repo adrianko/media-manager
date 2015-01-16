@@ -1,6 +1,5 @@
 import scala.io.Source._
 import sys.process._
-import spray.json._
 
 import java.io.File
 
@@ -19,6 +18,7 @@ object MediaManager {
 
     val sourceDir: String = ex(config.get("video_dir"))
     val keepList: String = ex(config.get("keep_list"))
+    val seedingMessage = "Seeding 100.0 %"
 
     def ex(x: Option[String]) = x match {
         case Some(s) => s
@@ -48,8 +48,8 @@ object MediaManager {
             keepListShows += line(0) -> line(1).toInt
         })
 
-        val json = getStatus.parseJson.asJsObject.fields
-        println(json)
+
+
     }
 
 }
