@@ -1,5 +1,6 @@
 import scala.io.Source._
 import sys.process._
+import spray.json._
 
 import java.io.File
 
@@ -7,7 +8,7 @@ object MediaManager {
 
     val cachePath: String = new File(".").getCanonicalPath + "/cache/"
     val config: Map[String, String] = Map(fromFile("config").getLines()
-        .map(_.replace("\n", "").split("=")).map(line => line(0) -> line(1)).toList : _*)
+        .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList : _*)
 
     val ut: Map[String, String] = Map[String, String](
         "user" -> "root",
@@ -18,7 +19,6 @@ object MediaManager {
 
     val sourceDir: String = ex(config.get("video_dir"))
     val keepList: String = ex(config.get("keep_list"))
-
 
     def ex(x: Option[String]) = x match {
         case Some(s) => s
@@ -44,12 +44,11 @@ object MediaManager {
             val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
         }
 
-        fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
+        fromFile("keep.list").getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
             keepListShows += line(0) -> line(1).toInt
         })
 
-        val jsonS = getStatus
-
+        val json = getStatus.parseJson
     }
 
 }
