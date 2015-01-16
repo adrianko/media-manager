@@ -59,6 +59,21 @@ object MediaManager {
             val hash = t.get(0)
             val status = t.get(21)
             println(hash + " " + status)
+            if(status == seedingMessage) {
+                val host = if (System.getProperty("os.name").contains("Windows")) {
+                    ex(ut.get("win_host"))
+                } else {
+                    ex(ut.get("other_host"))
+                }
+                val url = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) +
+                    "@" + host + ":8080/gui/?" + "action=stop&hash="+hash+"&"
+                    "list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+                Seq("wget", "-q", url, "-O", cachePath + "download").!
+                val url2 = "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) +
+                    "@" + host + ":8080/gui/?" + "action=remove&hash="+hash+"&"
+                "list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+                Seq("wget", "-q", url2, "-O", cachePath + "download").!
+            }
         }
 
 
