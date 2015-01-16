@@ -1,3 +1,6 @@
+import org.json.simple._
+import org.json.simple.parser._
+
 import scala.io.Source._
 import sys.process._
 
@@ -48,6 +51,15 @@ object MediaManager {
             keepListShows += line(0) -> line(1).toInt
         })
 
+        val json: JSONObject = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
+        val torrents = json.get("torrents").asInstanceOf[JSONArray]
+
+        for(i: Int <- 0 to (torrents.size() - 1)) {
+            val t = torrents.get(i).asInstanceOf[JSONArray]
+            val hash = t.get(0)
+            val status = t.get(21)
+            println(hash+" "+status)
+        }
 
 
     }
