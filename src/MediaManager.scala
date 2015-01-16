@@ -48,7 +48,7 @@ object MediaManager {
             keepListShows += line(0) -> line(1).toInt
         })
 
-        val json = getStatus.parseJson
+        val json = getStatus.parseJson.asJsObject.fields
     }
 
 }
