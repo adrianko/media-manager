@@ -52,7 +52,7 @@ object MediaManager {
         })
 
         val json: JSONObject = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
-        val torrents = json.get("torrents").asInstanceOf[JSONArray]
+        val torrents: JSONArray = json.get("torrents").asInstanceOf[JSONArray]
 
         for (i: Int <- 0 to (torrents.size() - 1)) {
             val t = torrents.get(i).asInstanceOf[JSONArray]
