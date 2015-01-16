@@ -44,11 +44,12 @@ object MediaManager {
             val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
         }
 
-        fromFile("keep.list").getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
+        fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
             keepListShows += line(0) -> line(1).toInt
         })
 
         val json = getStatus.parseJson.asJsObject.fields
+        println(json)
     }
 
 }
