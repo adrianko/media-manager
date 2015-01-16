@@ -7,7 +7,7 @@ import java.io.File
 object MediaManager {
 
     val cachePath: String = new File(".").getCanonicalPath + "/cache/"
-    val config: Map[String, String] = Map(fromFile("config").getLines()
+    val config: Map[String, String] = Map(fromFile("conf/config").getLines()
         .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList : _*)
 
     val ut: Map[String, String] = Map[String, String](
