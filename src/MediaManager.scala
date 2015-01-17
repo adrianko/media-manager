@@ -53,12 +53,17 @@ object MediaManager {
         Seq("wget", "-q", getURL("action=remove&hash=" + hash), "-O", cachePath + "download").!
     }
 
+    def extractFilename(fn: String): Map[String, String] = {
+
+        Map[String, String]()
+    }
+
     def main(args: Array[String]) {
         val keepListShows: collection.mutable.Map[String, Int] = collection.mutable.Map()
 
-        fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
-            keepListShows += line(0) -> line(1).toInt
-        })
+        fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach { line: Array[String] =>
+            keepListShows += line (0) -> line(1).toInt
+        }
 
         val json: JSONObject = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
         val torrents: JSONArray = json.get("torrents").asInstanceOf[JSONArray]
@@ -75,8 +80,9 @@ object MediaManager {
         }
 
         if (os) {
-            val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
-
+            new File(sourceDir).listFiles.toList.foreach { f: File =>
+                
+            }
         }
     }
 
