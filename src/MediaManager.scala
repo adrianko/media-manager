@@ -9,11 +9,7 @@ import java.io.File
 object MediaManager {
 
     val os = System.getProperty("os.name").contains("Windows")
-    val basePath: String = if (os) {
-        (getClass.getResource(".").getPath + "../../../").drop(1)
-    } else {
-        getClass.getResource(".").getPath + "../../../"
-    }
+    val basePath: String = (getClass.getResource(".").getPath + "../../../").drop(if (os) 1 else 0)
 
     val cachePath: String = basePath + "cache/"
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines()
