@@ -8,7 +8,13 @@ import java.io.File
 
 object MediaManager {
 
-    val basePath: String = getClass.getResource(".").getPath+"../../../"
+    val os = System.getProperty("os.name").contains("Windows")
+    val basePath: String = if (os) {
+        (getClass.getResource(".").getPath + "../../../").drop(1)
+    } else {
+        getClass.getResource(".").getPath + "../../../"
+    }
+
     val cachePath: String = basePath + "cache/"
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines()
         .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList: _*)
@@ -30,7 +36,7 @@ object MediaManager {
     }
 
     def getURL(params: String): String = {
-        val host = if (System.getProperty("os.name").contains("Windows")) {
+        val host = if (os) {
             ex(ut.get("win_host"))
         } else {
             ex(ut.get("other_host"))
@@ -58,10 +64,6 @@ object MediaManager {
     def main(args: Array[String]) {
         val keepListShows: collection.mutable.Map[String, Int] = collection.mutable.Map()
 
-        if (System.getProperty("os.name").contains("Windows")) {
-            val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
-        }
-
         fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach((line: Array[String]) => {
             keepListShows += line(0) -> line(1).toInt
         })
@@ -78,6 +80,11 @@ object MediaManager {
                 stop(hash)
                 remove(hash)
             }
+        }
+
+        if (System.getProperty("os.name").contains("Windows")) {
+            val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
+
         }
     }
 
