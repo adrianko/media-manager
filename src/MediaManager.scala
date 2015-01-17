@@ -36,11 +36,7 @@ object MediaManager {
     }
 
     def getURL(params: String): String = {
-        val host = if (os) {
-            ex(ut.get("win_host"))
-        } else {
-            ex(ut.get("other_host"))
-        }
+        val host = if (os) ex(ut.get("win_host")) else ex(ut.get("other_host"))
 
         "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) +
             "@" + host + ":8080/gui/?" + params + "&list=1&cid=0&getmsg=1" +
@@ -82,7 +78,7 @@ object MediaManager {
             }
         }
 
-        if (System.getProperty("os.name").contains("Windows")) {
+        if (os) {
             val sourceFiles: List[File] = new File(sourceDir).listFiles.toList
 
         }
