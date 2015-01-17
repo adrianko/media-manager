@@ -59,11 +59,8 @@ object MediaManager {
     }
 
     def main(args: Array[String]) {
-        val keepListShows: collection.mutable.Map[String, Int] = collection.mutable.Map()
-
-        fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).foreach { line: Array[String] =>
-            keepListShows += line (0) -> line(1).toInt
-        }
+        val keepListShows: Map[String, String] = Map(fromFile(keepList).getLines()
+            .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim).toList: _*)
 
         val json: JSONObject = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
         val torrents: JSONArray = json.get("torrents").asInstanceOf[JSONArray]
@@ -81,7 +78,7 @@ object MediaManager {
 
         if (os) {
             new File(sourceDir).listFiles.toList.foreach { f: File =>
-                
+
             }
         }
     }
