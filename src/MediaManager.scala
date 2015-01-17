@@ -8,9 +8,9 @@ import java.io.File
 
 object MediaManager {
 
-    val basePath: String = new File(".").getCanonicalPath
-    val cachePath: String = basePath + "/cache/"
-    val config: Map[String, String] = Map(fromFile(basePath + "/conf/config").getLines()
+    val basePath: String = getClass.getResource(".").getPath+"../../../"
+    val cachePath: String = basePath + "cache/"
+    val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines()
         .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList: _*)
 
     val ut: Map[String, String] = Map[String, String](
@@ -21,7 +21,7 @@ object MediaManager {
     )
 
     val sourceDir: String = ex(config.get("video_dir"))
-    val keepList: String = basePath + "/" + ex(config.get("keep_list"))
+    val keepList: String = basePath + ex(config.get("keep_list"))
     val seedingMessage = "Seeding 100.0 %"
 
     def ex(x: Option[String]) = x match {
@@ -73,7 +73,7 @@ object MediaManager {
             val t = torrents.get(i).asInstanceOf[JSONArray]
             val hash = t.get(0).toString
             val status = t.get(21)
-            
+
             if (status == seedingMessage) {
                 stop(hash)
                 remove(hash)
