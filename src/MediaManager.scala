@@ -75,9 +75,15 @@ object MediaManager {
             }
         }
 
-        if (os) {
-            new File(sourceDir).listFiles.toList.foreach { f: File =>
-
+        if (!os) {
+            System.exit(0)
+        }
+        
+        new File(sourceDir).listFiles.toList.foreach { f: File =>
+            keepListShows.keys.foreach { t =>
+                if (f.getName.contains(t)) {
+                    println(f.getName)
+                }
             }
         }
     }
