@@ -8,8 +8,9 @@ import java.io.File
 
 object MediaManager {
 
-    val cachePath: String = new File(".").getCanonicalPath + "/cache/"
-    val config: Map[String, String] = Map(fromFile("conf/config").getLines()
+    val basePath: String = new File(".").getCanonicalPath
+    val cachePath: String = basePath + "/cache/"
+    val config: Map[String, String] = Map(fromFile(basePath + "/conf/config").getLines()
         .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList: _*)
 
     val ut: Map[String, String] = Map[String, String](
@@ -20,7 +21,7 @@ object MediaManager {
     )
 
     val sourceDir: String = ex(config.get("video_dir"))
-    val keepList: String = ex(config.get("keep_list"))
+    val keepList: String = basePath + "/" + ex(config.get("keep_list"))
     val seedingMessage = "Seeding 100.0 %"
 
     def ex(x: Option[String]) = x match {
