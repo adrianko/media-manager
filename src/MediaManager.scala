@@ -53,6 +53,10 @@ object MediaManager {
         Seq("wget", "-q", getURL("action=remove&hash=" + hash), "-O", cachePath + "download").!
     }
 
+    def rename(file: File) = {
+
+    }
+
     def main(args: Array[String]) {
         val keepListShows: Map[String, Int] = Map(fromFile(keepList).getLines()
             .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
@@ -74,10 +78,17 @@ object MediaManager {
             System.exit(0)
         }
 
+        // this can be more efficient, I just can't be bothered
         new File(sourceDir).listFiles.toList.foreach { f: File =>
             keepListShows.keys.foreach { t =>
                 if (f.getName.contains(t)) {
-                    println(f.getName)
+                    if (f.isFile) {
+                        rename(f)
+                    } else if (f.isDirectory) {
+                        f.listFiles.toList.foreach { nf: File =>
+                            
+                        }
+                    }
                 }
             }
         }
