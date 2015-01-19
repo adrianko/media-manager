@@ -53,11 +53,6 @@ object MediaManager {
         Seq("wget", "-q", getURL("action=remove&hash=" + hash), "-O", cachePath + "download").!
     }
 
-    def extractFilename(fn: String): Map[String, String] = {
-
-        Map[String, String]()
-    }
-
     def main(args: Array[String]) {
         val keepListShows: Map[String, Int] = Map(fromFile(keepList).getLines()
             .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
@@ -78,7 +73,7 @@ object MediaManager {
         if (!os) {
             System.exit(0)
         }
-        
+
         new File(sourceDir).listFiles.toList.foreach { f: File =>
             keepListShows.keys.foreach { t =>
                 if (f.getName.contains(t)) {
