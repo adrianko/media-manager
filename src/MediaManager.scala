@@ -78,7 +78,7 @@ object MediaManager {
             System.exit(0)
         }
 
-        // this can be more efficient, I just can't be bothered
+        // this can be more efficient, I just can't be bothered right now
         new File(sourceDir).listFiles.toList.foreach { f: File =>
             keepListShows.keys.foreach { t =>
                 if (f.getName.contains(t)) {
@@ -86,7 +86,9 @@ object MediaManager {
                         rename(f)
                     } else if (f.isDirectory) {
                         f.listFiles.toList.foreach { nf: File =>
-                            
+                            if (nf.getName.contains(t) && (nf.getName.contains(".mp4") || nf.getName.contains(".mkv"))) {
+                                rename(f)
+                            }
                         }
                     }
                 }
