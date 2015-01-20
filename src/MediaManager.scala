@@ -57,6 +57,28 @@ object MediaManager {
 
     }
 
+    def isVideoFile(f: File): Boolean = {
+        f.getName.contains(".mp4") || f.getName.contains(".mkv")
+    }
+
+    def keepFile(files: List[File], keepList: Map[String, Int]): Unit = {
+       files.foreach { f: File =>
+            keepList.keys.foreach { t =>
+                if (f.getName.contains(t)) {
+                    if (f.isFile) {
+                        rename(f)
+                    } else if (f.isDirectory) {
+                        f.listFiles.toList.foreach { nf: File =>
+                            if (nf.getName.contains(t) && isVideoFile(nf)) {
+                                rename(f)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     def main(args: Array[String]) {
         val keepListShows: Map[String, Int] = Map(fromFile(keepList).getLines()
             .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
@@ -79,21 +101,7 @@ object MediaManager {
         }
 
         // this can be more efficient, I just can't be bothered right now
-        new File(sourceDir).listFiles.toList.foreach { f: File =>
-            keepListShows.keys.foreach { t =>
-                if (f.getName.contains(t)) {
-                    if (f.isFile) {
-                        rename(f)
-                    } else if (f.isDirectory) {
-                        f.listFiles.toList.foreach { nf: File =>
-                            if (nf.getName.contains(t) && (nf.getName.contains(".mp4") || nf.getName.contains(".mkv"))) {
-                                rename(f)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        keepFile(new File(sourceDir).listFiles.toList, keepListShows)
     }
 
 }
