@@ -65,15 +65,9 @@ object MediaManager {
        files.foreach { f: File =>
             keepList.keys.foreach { t =>
                 if (f.getName.contains(t) && isVideoFile(f)) {
-                    if (f.isFile) {
-                        rename(f)
-                    } else if (f.isDirectory) {
-                        f.listFiles.toList.foreach { nf: File =>
-                            if (nf.getName.contains(t) && isVideoFile(nf)) {
-                                rename(f)
-                            }
-                        }
-                    }
+                    //do something with it
+                } else if (f.isDirectory) {
+                    keepFile(f.listFiles.toList, keepList)
                 }
             }
         }
