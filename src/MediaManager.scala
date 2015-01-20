@@ -58,13 +58,13 @@ object MediaManager {
     }
 
     def isVideoFile(f: File): Boolean = {
-        f.getName.contains(".mp4") || f.getName.contains(".mkv")
+        (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
     }
 
     def keepFile(files: List[File], keepList: Map[String, Int]): Unit = {
        files.foreach { f: File =>
             keepList.keys.foreach { t =>
-                if (f.getName.contains(t)) {
+                if (f.getName.contains(t) && isVideoFile(f)) {
                     if (f.isFile) {
                         rename(f)
                     } else if (f.isDirectory) {
