@@ -93,8 +93,7 @@ object MediaManager {
         if (!os) {
             System.exit(0)
         }
-
-        // this can be more efficient, I just can't be bothered right now
+        
         keepFile(new File(sourceDir).listFiles.toList, keepListShows)
     }
 
