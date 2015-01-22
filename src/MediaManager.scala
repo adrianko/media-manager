@@ -79,8 +79,6 @@ object MediaManager {
     }
 
     def main(args: Array[String]) {
-        val keepListShows: Map[String, Int] = Map(fromFile(keepList).getLines()
-            .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
         val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
             .get("torrents").asInstanceOf[JSONArray]
 
@@ -96,7 +94,9 @@ object MediaManager {
             System.exit(0)
         }
         
-        keepFile(new File(sourceDir).listFiles.toList, keepListShows)
+        keepFile(new File(sourceDir).listFiles.toList, Map(fromFile(keepList).getLines()
+            .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
+        )
     }
 
 }
