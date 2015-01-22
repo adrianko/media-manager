@@ -40,8 +40,7 @@ object MediaManager {
     }
 
     def getStatus: String = {
-        val url = getURL("1=1")
-        Seq("wget", "-q", url, "-O", cachePath + "download").!
+        Seq("wget", "-q", getURL("1=1"), "-O", cachePath + "download").!
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
@@ -57,8 +56,6 @@ object MediaManager {
         stop(hash)
         remove(hash)
     }
-    
-    
 
     def rename(file: File) = {
 
