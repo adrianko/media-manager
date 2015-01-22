@@ -44,9 +44,9 @@ object MediaManager {
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
-    def sendAction(hash: String, action: String) = {
+    def sendAction(hash: String, action: String) = 
         Seq("wget", "-q", getURL("action=" + action + "&hash=" + hash), "-O", cachePath + "download").!
-    }
+    
 
     def stop(hash: String) = sendAction(hash, "stop")
 
