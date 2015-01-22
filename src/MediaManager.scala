@@ -45,18 +45,20 @@ object MediaManager {
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
-    def stop(hash: String) = {
-        Seq("wget", "-q", getURL("action=stop&hash=" + hash), "-O", cachePath + "download").!
+    def sendAction(hash: String, action: String) = {
+        Seq("wget", "-q", getURL("action=" + action + "&hash=" + hash), "-O", cachePath + "download").!
     }
 
-    def remove(hash: String) = {
-        Seq("wget", "-q", getURL("action=remove&hash=" + hash), "-O", cachePath + "download").!
-    }
+    def stop(hash: String) = sendAction(hash, "stop")
+
+    def remove(hash: String) = sendAction(hash, "remove")
     
     def clearSeed(hash: String) = {
         stop(hash)
         remove(hash)
     }
+    
+    
 
     def rename(file: File) = {
 
