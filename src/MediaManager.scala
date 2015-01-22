@@ -52,6 +52,11 @@ object MediaManager {
     def remove(hash: String) = {
         Seq("wget", "-q", getURL("action=remove&hash=" + hash), "-O", cachePath + "download").!
     }
+    
+    def clearSeed(hash: String) = {
+        stop(hash)
+        remove(hash)
+    }
 
     def rename(file: File) = {
 
@@ -81,12 +86,9 @@ object MediaManager {
 
         for (i: Int <- 0 to (torrents.size() - 1)) {
             val t = torrents.get(i).asInstanceOf[JSONArray]
-            val hash = t.get(0).toString
-            val status = t.get(21)
 
-            if (status == seedingMessage) {
-                stop(hash)
-                remove(hash)
+            if (t.get(21) == seedingMessage) {
+                clearSeed(t.get(0).toString)
             }
         }
 
