@@ -44,14 +44,14 @@ object MediaManager {
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
-    def sendAction(hash: String, action: String) = 
+    def sendAction(hash: String, action: String) =
         Seq("wget", "-q", getURL("action=" + action + "&hash=" + hash), "-O", cachePath + "download").!
-    
+
 
     def stop(hash: String) = sendAction(hash, "stop")
 
     def remove(hash: String) = sendAction(hash, "remove")
-    
+
     def clearSeed(hash: String) = {
         stop(hash)
         remove(hash)
@@ -66,7 +66,7 @@ object MediaManager {
     }
 
     def keepFile(files: List[File], keepList: Map[String, Int]): Unit = {
-       files.foreach { f: File =>
+        files.foreach { f: File =>
             keepList.keys.foreach { t =>
                 if (f.getName.contains(t) && isVideoFile(f)) {
                     //do something with it
@@ -92,7 +92,7 @@ object MediaManager {
         if (!os) {
             System.exit(0)
         }
-        
+
         keepFile(new File(sourceDir).listFiles.toList, Map(fromFile(keepList).getLines()
             .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
         )
