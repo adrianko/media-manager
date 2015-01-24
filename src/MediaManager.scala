@@ -57,13 +57,9 @@ object MediaManager {
         remove(hash)
     }
 
-    def rename(file: File) = {
+    def rename(file: File) = ()
 
-    }
-
-    def isVideoFile(f: File): Boolean = {
-        (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
-    }
+    def isVideoFile(f: File): Boolean = (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
 
     def keepFile(files: List[File], keepList: Map[String, Int]): Set[File] = {
         var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
