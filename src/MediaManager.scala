@@ -1,6 +1,7 @@
 import org.json.simple._
 import org.json.simple.parser._
 
+import scala.collection.mutable
 import scala.io.Source._
 import sys.process._
 
@@ -65,16 +66,24 @@ object MediaManager {
         (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
     }
 
-    def keepFile(files: List[File], keepList: Map[String, Int]): Unit = {
+    def keepFile(files: List[File], keepList: Map[String, Int]): Set[File] = {
+        var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
+        
         files.foreach { f: File =>
+            
+            // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
+                
                 if (f.getName.contains(t) && isVideoFile(f)) {
-                    //do something with it
+                    processing += f
                 } else if (f.isDirectory) {
-                    keepFile(f.listFiles.toList, keepList)
+                    processing ++= keepFile(f.listFiles.toList, keepList)
                 }
+                // otherwise ignore completely
             }
         }
+        
+        processing.toSet
     }
 
     def main(args: Array[String]) {
@@ -93,8 +102,9 @@ object MediaManager {
             System.exit(0)
         }
 
-        keepFile(new File(sourceDir).listFiles.toList, Map(fromFile(keepList).getLines()
-            .map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
+        val processing: Set[File] = keepFile(new File(sourceDir).listFiles.toList, 
+            Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(","))
+                .map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
         )
     }
 
