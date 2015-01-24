@@ -65,7 +65,7 @@ object MediaManager {
         (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
     }
 
-    def keepFile(files: List[File], keepList: Map[String, Int]): Unit = {
+    def keepFile(files: List[File], keepList: Map[String, Int]) = {
         files.foreach { f: File =>
             keepList.keys.foreach { t =>
                 if (f.getName.contains(t) && isVideoFile(f)) {
