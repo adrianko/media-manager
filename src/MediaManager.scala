@@ -40,12 +40,13 @@ object MediaManager {
     }
 
     def getStatus: String = {
-        Seq("wget", "-q", getURL("1=1"), "-O", cachePath + "download").!
+        download(getURL("1=1"))
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
-    def sendAction(hash: String, action: String) =
-        Seq("wget", "-q", getURL("action=" + action + "&hash=" + hash), "-O", cachePath + "download").!
+    def sendAction(hash: String, action: String) = download(getURL("action=" + action + "&hash=" + hash))
+    
+    def download(url: String) = Seq("wget", "-q", url, "-O", cachePath + "download").!
 
     def stop(hash: String) = sendAction(hash, "stop")
 
