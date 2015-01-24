@@ -1,7 +1,6 @@
 import org.json.simple._
 import org.json.simple.parser._
 
-import scala.collection.mutable
 import scala.io.Source._
 import sys.process._
 
@@ -106,6 +105,8 @@ object MediaManager {
             Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(","))
                 .map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
         )
+        
+        processing.foreach { f => println(f.getAbsoluteFile) }
     }
 
 }
