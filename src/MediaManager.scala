@@ -47,7 +47,6 @@ object MediaManager {
     def sendAction(hash: String, action: String) =
         Seq("wget", "-q", getURL("action=" + action + "&hash=" + hash), "-O", cachePath + "download").!
 
-
     def stop(hash: String) = sendAction(hash, "stop")
 
     def remove(hash: String) = sendAction(hash, "remove")
