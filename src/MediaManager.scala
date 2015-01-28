@@ -83,7 +83,7 @@ object MediaManager {
 
     def main(args: Array[String]) {
         val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
-            s.get("torrents").asInstanceOf[JSONArray]
+            .get("torrents").asInstanceOf[JSONArray]
 
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (torrents.size() - 1)) {
