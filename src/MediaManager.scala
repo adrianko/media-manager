@@ -83,12 +83,12 @@ object MediaManager {
 
     def main(args: Array[String]) {
         val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
-            .get("torrents").asInstanceOf[JSONArray]
+          .get("torrents").asInstanceOf[JSONArray]
 
         for (i: Int <- 0 to (torrents.size() - 1)) {
             val t = torrents.get(i).asInstanceOf[JSONArray]
 
-            if (t.get(21) == seedingMessage) {
+            if (t.get(21).toString == seedingMessage) {
                 clearSeed(t.get(0).toString)
             }
         }
