@@ -8,6 +8,10 @@ import java.io.File
 
 /**
  * MediaManager class
+ * TODO Check can connect to service
+ * TODO Process files to be kept
+ * TODO SD files move to sync
+ * TODO HD files straight to library
  */
 object MediaManager {
 
