@@ -2,7 +2,6 @@ import org.json.simple._
 import org.json.simple.parser._
 
 import scala.io.Source._
-import sys.process._
 
 import java.io.File
 
@@ -13,7 +12,7 @@ import java.io.File
  * TODO SD files move to sync
  * TODO HD files straight to library
  */
-object MediaManager {
+object MediaManager extends Base {
 
     /**
      * if Windows
@@ -24,11 +23,6 @@ object MediaManager {
      * Path to class
      */
     val basePath: String = (getClass.getResource(".").getPath + "../../../").drop(if (os) 1 else 0)
-
-    /**
-     * cache path / download files
-     */
-    val cachePath: String = basePath + "cache/"
 
     /**
      * configuration settings
@@ -57,11 +51,6 @@ object MediaManager {
     val keepList: String = basePath + ex(config.get("keep_list"))
 
     /**
-     * message displayed when file download finished
-     */
-    val seedingMessage = "Seeding 100.0 %"
-
-    /**
      * extract map options
      * @param x Some/None
      * @return
@@ -69,66 +58,6 @@ object MediaManager {
     def ex(x: Option[String]) = x match {
         case Some(s) => s
         case None => ""
-    }
-
-    /**
-     * build url with timestamps and other attributes
-     * @param params GET parameters
-     * @return
-     */
-    def getURL(params: String): String = {
-        val host = if (os) ex(ut.get("win_host")) else ex(ut.get("other_host"))
-
-        "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + host + ":8080/gui/?" + params +
-            "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
-    }
-
-    /**
-     * Current download status
-     * @return String
-     */
-    def getStatus: String = {
-        download(getURL("1=1"))
-        fromFile(cachePath + "download").getLines().toList.mkString("")
-    }
-
-    /**
-     * stop or delete completed file queue
-     * @param hash File hash
-     * @param action What to do with it
-     * @return
-     */
-    def sendAction(hash: String, action: String) = download(getURL("action=" + action + "&hash=" + hash))
-
-    /**
-     * Send request
-     * @param url String
-     * @return None
-     */
-    def download(url: String) = Seq("wget", "-q", url, "-O", cachePath + "download").!
-
-    /**
-     * Stop action
-     * @param hash String
-     * @return None
-     */
-    def stop(hash: String) = sendAction(hash, "stop")
-
-    /**
-     * Remove action
-     * @param hash String
-     * @return
-     */
-    def remove(hash: String) = sendAction(hash, "remove")
-
-    /**
-     * DO both actions for completed file
-     * @param hash String
-     * @return None
-     */
-    def clearSeed(hash: String) = {
-        stop(hash)
-        remove(hash)
     }
 
     /**
@@ -171,15 +100,15 @@ object MediaManager {
     }
 
     def main(args: Array[String]) {
-        val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
+        val torrents: JSONArray = new JSONParser().parse(Downloader.getStatus).asInstanceOf[JSONObject].get("torrents")
             .asInstanceOf[JSONArray]
 
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (torrents.size() - 1)) {
             val t = torrents.get(i).asInstanceOf[JSONArray]
 
-            if (t.get(21).toString.equals(seedingMessage)) {
-                clearSeed(t.get(0).toString)
+            if (t.get(21).toString.equals(Downloader.seedingMessage)) {
+                Downloader.clearSeed(t.get(0).toString)
             }
         }
 
