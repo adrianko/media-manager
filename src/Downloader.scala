@@ -1,4 +1,5 @@
 import scala.io.Source._
+import sys.process._
 
 object Downloader extends Base {
 
