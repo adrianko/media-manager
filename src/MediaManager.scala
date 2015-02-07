@@ -51,16 +51,6 @@ object MediaManager extends Base {
     val keepList: String = basePath + ex(config.get("keep_list"))
 
     /**
-     * extract map options
-     * @param x Some/None
-     * @return
-     */
-    def ex(x: Option[String]) = x match {
-        case Some(s) => s
-        case None => ""
-    }
-
-    /**
      * Use external application to rename file according to standards
      * @param file the file
      */
