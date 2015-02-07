@@ -178,7 +178,7 @@ object MediaManager {
         for (i: Int <- 0 to (torrents.size() - 1)) {
             val t = torrents.get(i).asInstanceOf[JSONArray]
 
-            if (t.get(21).toString == seedingMessage) {
+            if (t.get(21).toString.equals(seedingMessage)) {
                 clearSeed(t.get(0).toString)
             }
         }
