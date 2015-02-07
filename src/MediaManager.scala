@@ -33,8 +33,8 @@ object MediaManager {
     /**
      * configuration settings
      */
-    val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines()
-        .map(_.replace("\n", "").split("=")).map(line => line(0).trim -> line(1).trim).toList: _*)
+    val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
+        .map(line => line(0).trim -> line(1).trim).toList: _*)
 
     /**
      * ut settings / credentials
@@ -79,9 +79,8 @@ object MediaManager {
     def getURL(params: String): String = {
         val host = if (os) ex(ut.get("win_host")) else ex(ut.get("other_host"))
 
-        "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) +
-            "@" + host + ":8080/gui/?" + params + "&list=1&cid=0&getmsg=1" +
-            "&t=" + System.currentTimeMillis
+        "http://" + ex(ut.get("user")) + ":" + ex(ut.get("pass")) + "@" + host + ":8080/gui/?" + params +
+            "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
     }
 
     /**
@@ -172,8 +171,8 @@ object MediaManager {
     }
 
     def main(args: Array[String]) {
-        val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject]
-            .get("torrents").asInstanceOf[JSONArray]
+        val torrents: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
+            .asInstanceOf[JSONArray]
 
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (torrents.size() - 1)) {
@@ -189,8 +188,8 @@ object MediaManager {
         }
 
         val processing: Set[File] = keepFile(new File(sourceDir).listFiles.toList, 
-            Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(","))
-                .map(line => line(0).trim -> line(1).trim.toInt).toList: _*)
+            Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1)
+                .trim.toInt).toList: _*)
         )
         
         processing.foreach { f => println(f.getAbsoluteFile) }
