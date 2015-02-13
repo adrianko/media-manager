@@ -82,6 +82,8 @@ object MediaManager extends Base {
                     processing += f
                 } else if (f.isDirectory) {
                     processing ++= keepFile(f.listFiles.toList, keepList)
+                } else if (f.getName.takeRight(4).equals(".nfo") || f.getName.takeRight(4).equals(".txt")) {
+                  f.delete()
                 }
                 // otherwise ignore completely
             }
