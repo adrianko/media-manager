@@ -62,7 +62,7 @@ object MediaManager extends Base {
      * @param f File
      * @return
      */
-    def isVideoFile(f: File): Boolean = (f.getName.contains(".mp4") || f.getName.contains(".mkv")) && f.isFile
+    def isVideoFile(f: File): Boolean = (f.getName.takeRight(4).equals(".mp4") || f.getName.takeRight(4).equals(".mkv")) && f.isFile
 
     /**
      * Process list of files and pull out those to keep
