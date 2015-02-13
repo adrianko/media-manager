@@ -11,7 +11,6 @@ import java.io.File
  * TODO Process files to be kept
  * TODO SD files move to sync
  * TODO HD files straight to library
- * TODO keep srt if present
  */
 object MediaManager extends Base {
 
