@@ -1,3 +1,6 @@
+import java.net.{URL, HttpURLConnection}
+import java.util.Base64
+
 import scala.io.Source._
 import sys.process._
 
@@ -30,7 +33,8 @@ object Downloader extends Base {
      * @return String
      */
     def getStatus: String = {
-        download(getURL("1=1"))
+        //download(getURL("1=1"))
+        Seq("wget", "-q", getURL("1=1"), "-O", cachePath + "download").!
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
 
@@ -47,7 +51,13 @@ object Downloader extends Base {
      * @param url String
      * @return None
      */
-    def download(url: String) = Seq("wget", "-q", url, "-O", cachePath + "download").!
+    def download(url: String) = {
+        val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
+        con.setRequestMethod("GET")
+        con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.ut.get("user")) + ":" + ex(MediaManager.ut.get("pass"))).getBytes)))
+        con.getResponseCode
+        //Seq("wget", "-q", url, "-O", cachePath + "download").!
+    }
 
     /**
      * Stop action
