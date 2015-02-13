@@ -29,7 +29,7 @@ object MediaManager extends Base {
      * configuration settings
      */
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
-        .map(line => line(0).trim -> line(1).trim).toList: _*)
+            .map(line => line(0).trim -> line(1).trim).toList: _*)
 
     /**
      * ut settings / credentials
@@ -72,12 +72,12 @@ object MediaManager extends Base {
      */
     def keepFile(files: List[File], keepList: Map[String, Int]): Set[File] = {
         var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
-        
+
         files.foreach { f: File =>
-            
+
             // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
-                
+
                 if (f.getName.contains(t) && isVideoFile(f)) {
                     processing += f
                 } else if (f.isDirectory) {
@@ -94,13 +94,13 @@ object MediaManager extends Base {
                 // otherwise ignore completely
             }
         }
-        
+
         processing.toSet
     }
 
     def main(args: Array[String]) {
         val torrents: JSONArray = new JSONParser().parse(Downloader.getStatus).asInstanceOf[JSONObject].get("torrents")
-            .asInstanceOf[JSONArray]
+                .asInstanceOf[JSONArray]
 
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (torrents.size() - 1)) {
@@ -115,12 +115,12 @@ object MediaManager extends Base {
             System.exit(0)
         }
 
-        val processing: Set[File] = keepFile(new File(sourceDir).listFiles.toList, 
+        val processing: Set[File] = keepFile(new File(sourceDir).listFiles.toList,
             Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1)
-                .trim.toInt).toList: _*)
+                    .trim.toInt).toList: _*)
         )
-        
-        processing.foreach { f => println(f.getAbsoluteFile) }
+
+        processing.foreach { f => println(f.getAbsoluteFile)}
     }
 
 }
