@@ -81,7 +81,11 @@ object MediaManager extends Base {
                 if (f.getName.contains(t) && isVideoFile(f)) {
                     processing += f
                 } else if (f.isDirectory) {
-                    processing ++= keepFile(f.listFiles.toList, keepList)
+                    if (f.getName.contains("sample")) {
+                        f.delete()
+                    } else {
+                        processing ++= keepFile(f.listFiles.toList, keepList)
+                    }
                 } else if (f.getName.takeRight(4).equals(".nfo") || f.getName.takeRight(4).equals(".txt")) {
                   f.delete()
                 }
