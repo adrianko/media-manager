@@ -1,3 +1,4 @@
+import java.io.{InputStreamReader, BufferedReader, InputStream}
 import java.net.{URL, HttpURLConnection}
 import java.util.Base64
 
@@ -33,7 +34,7 @@ object Downloader extends Base {
      * @return String
      */
     def getStatus: String = {
-        //download(getURL("1=1"))
+        //download(getURL("1=1"), content = true)
         Seq("wget", "-q", getURL("1=1"), "-O", cachePath + "download").!
         fromFile(cachePath + "download").getLines().toList.mkString("")
     }
@@ -44,19 +45,18 @@ object Downloader extends Base {
      * @param action What to do with it
      * @return
      */
-    def sendAction(hash: String, action: String) = download(getURL("action=" + action + "&hash=" + hash))
+    def sendAction(hash: String, action: String) = download(getURL("action=" + action + "&hash=" + hash), content = false)
 
     /**
      * Send request
      * @param url String
      * @return None
      */
-    def download(url: String) = {
+    def download(url: String, content: Boolean) = {
         val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
         con.setRequestMethod("GET")
         con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.ut.get("user")) + ":" + ex(MediaManager.ut.get("pass"))).getBytes)))
         con.getResponseCode
-        //Seq("wget", "-q", url, "-O", cachePath + "download").!
     }
 
     /**
