@@ -87,7 +87,9 @@ object MediaManager extends Base {
                         processing ++= keepFile(f.listFiles.toList, keepList)
                     }
                 } else if (f.getName.takeRight(4).equals(".nfo") || f.getName.takeRight(4).equals(".txt")) {
-                  f.delete()
+                    f.delete()
+                } else if (f.getName.takeRight(4).equals(".srt")) {
+                    processing += f
                 }
                 // otherwise ignore completely
             }
