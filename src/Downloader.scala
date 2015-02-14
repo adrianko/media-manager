@@ -48,7 +48,9 @@ object Downloader extends Base {
     def download(url: String, content: Boolean): String = {
         val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
         con.setRequestMethod("GET")
-        con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.ut.get("user")) + ":" + ex(MediaManager.ut.get("pass"))).getBytes)))
+        con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode(
+            (ex(MediaManager.ut.get("user")) + ":" + ex(MediaManager.ut.get("pass"))).getBytes))
+        )
 
         if (!content) {
             con.getResponseCode.toString
