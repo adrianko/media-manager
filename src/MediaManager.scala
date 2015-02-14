@@ -17,7 +17,7 @@ object MediaManager extends Base {
     /**
      * if Windows
      */
-    val os = System.getProperty("os.name").contains("Windows")
+    val os: Boolean = System.getProperty("os.name").contains("Windows")
 
     /**
      * Path to class
@@ -108,10 +108,6 @@ object MediaManager extends Base {
             if (t.get(21).toString.equals(Downloader.seedingMessage)) {
                 Downloader.clearSeed(t.get(0).toString)
             }
-        }
-
-        if (!os) {
-            System.exit(0)
         }
 
         val processing: Set[File] = processFolder(new File(sourceDir).listFiles.toList,
