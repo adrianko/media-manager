@@ -2,9 +2,6 @@ import java.io.{InputStreamReader, BufferedReader, InputStream}
 import java.net.{URL, HttpURLConnection}
 import java.util.Base64
 
-import scala.io.Source._
-import sys.process._
-
 object Downloader extends Base {
 
     /**
@@ -33,11 +30,7 @@ object Downloader extends Base {
      * Current download status
      * @return String
      */
-    def getStatus: String = {
-        //download(getURL("1=1"), content = true)
-        Seq("wget", "-q", getURL("1=1"), "-O", cachePath + "download").!
-        fromFile(cachePath + "download").getLines().toList.mkString("")
-    }
+    def getStatus: String = download(getURL("1=1"), content = true)
 
     /**
      * stop or delete completed file queue
@@ -52,11 +45,25 @@ object Downloader extends Base {
      * @param url String
      * @return None
      */
-    def download(url: String, content: Boolean) = {
+    def download(url: String, content: Boolean): String = {
         val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
         con.setRequestMethod("GET")
         con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.ut.get("user")) + ":" + ex(MediaManager.ut.get("pass"))).getBytes)))
-        con.getResponseCode
+
+        if (!content) {
+            con.getResponseCode.toString
+        } else {
+            val br : BufferedReader = new BufferedReader(new InputStreamReader(con.getContent.asInstanceOf[InputStream]))
+            val text: StringBuilder = new StringBuilder
+            var line = br.readLine
+
+            while (line != null) {
+                text.append(line)
+                line = br.readLine
+            }
+
+            text.toString()
+        }
     }
 
     /**
