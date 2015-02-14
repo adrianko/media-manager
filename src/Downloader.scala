@@ -56,15 +56,7 @@ object Downloader extends Base {
             con.getResponseCode.toString
         } else {
             val br : BufferedReader = new BufferedReader(new InputStreamReader(con.getContent.asInstanceOf[InputStream]))
-            val text: StringBuilder = new StringBuilder
-            var line = br.readLine
-
-            while (line != null) {
-                text.append(line)
-                line = br.readLine
-            }
-
-            text.toString()
+            Iterator.continually(br.readLine).takeWhile(_ != null).mkString
         }
     }
 
