@@ -69,7 +69,7 @@ object MediaManager extends Base {
      * @param keepList - the list that we want
      * @return
      */
-    def keepFile(files: List[File], keepList: Map[String, Int]): Set[File] = {
+    def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
         var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
 
         files.foreach { f: File =>
@@ -83,7 +83,7 @@ object MediaManager extends Base {
                     if (f.getName.contains("sample")) {
                         f.delete()
                     } else {
-                        processing ++= keepFile(f.listFiles.toList, keepList)
+                        processing ++= processFolder(f.listFiles.toList, keepList)
                     }
                 } else if (f.getName.takeRight(4).equals(".nfo") || f.getName.takeRight(4).equals(".txt")) {
                     f.delete()
@@ -114,7 +114,7 @@ object MediaManager extends Base {
             System.exit(0)
         }
 
-        val processing: Set[File] = keepFile(new File(sourceDir).listFiles.toList,
+        val processing: Set[File] = processFolder(new File(sourceDir).listFiles.toList,
             Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1)
                     .trim.toInt).toList: _*)
         )
