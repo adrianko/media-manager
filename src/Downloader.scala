@@ -19,9 +19,8 @@ object Downloader extends Base {
      * @param params GET parameters
      * @return
      */
-    def getURL(params: String): String = {
-        "http://" + ex(MediaManager.ut.get("win_host")) + ":8080/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
-    }
+    def getURL(params: String): String = "http://" + ex(MediaManager.ut.get("win_host")) + ":8080/gui/?" + params +
+        "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
 
     /**
      * Current download status
