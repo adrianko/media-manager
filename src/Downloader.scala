@@ -20,8 +20,7 @@ object Downloader extends Base {
      * @return
      */
     def getURL(params: String): String = {
-        "http://" + (if (MediaManager.os) ex(MediaManager.ut.get("win_host")) else ex(MediaManager.ut.get("other_host"))) +
-            ":8080/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+        "http://" + ex(MediaManager.ut.get("win_host")) + ":8080/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
     }
 
     /**

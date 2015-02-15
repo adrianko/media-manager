@@ -36,7 +36,7 @@ object MediaManager extends Base {
     val ut: Map[String, String] = Map[String, String](
         "user" -> "root",
         "pass" -> ex(config.get("password")),
-        "win_host" -> "localhost",
+        "win_host" -> "127.0.0.1",
         "other_host" -> ex(config.get("ip"))
     )
 
