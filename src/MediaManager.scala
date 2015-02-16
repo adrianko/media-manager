@@ -13,62 +13,27 @@ import java.io.File
  * TODO HD files straight to library
  */
 object MediaManager extends Base {
-
-    /**
-     * if Windows
-     */
-    val os: Boolean = System.getProperty("os.name").contains("Windows")
-
-    /**
-     * Path to class
-     */
-    val basePath: String = (getClass.getResource(".").getPath + "../../../").drop(if (os) 1 else 0)
-
-    /**
-     * configuration settings
-     */
+    
+    val basePath: String = (getClass.getResource(".").getPath + "../../../").drop(1)
+    
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
             .map(line => line(0).trim -> line(1).trim).toList: _*)
 
-    /**
-     * ut settings / credentials
-     */
     val ut: Map[String, String] = Map[String, String](
         "user" -> "root",
         "pass" -> ex(config.get("password")),
         "win_host" -> "127.0.0.1",
         "other_host" -> ex(config.get("ip"))
     )
-
-    /**
-     * completion folder
-     */
+    
     val sourceDir: String = ex(config.get("video_dir"))
-
-    /**
-     * list of files to keep
-     */
+    
     val keepList: String = basePath + ex(config.get("keep_list"))
-
-    /**
-     * Use external application to rename file according to standards
-     * @param file the file
-     */
+    
     def rename(file: File) = ()
-
-    /**
-     * Check whether is a file and if has particular extension
-     * @param f File
-     * @return
-     */
+    
     def isVideoFile(f: File): Boolean = (f.getName.takeRight(4).equals(".mp4") || f.getName.takeRight(4).equals(".mkv")) && f.isFile
-
-    /**
-     * Process list of files and pull out those to keep
-     * @param files - the file list
-     * @param keepList - the list that we want
-     * @return
-     */
+    
     def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
         var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
 
