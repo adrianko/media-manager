@@ -5,11 +5,6 @@ import java.util.Base64
 object Downloader extends Base {
 
     /**
-     * cache path / download files
-     */
-    val cachePath: String = MediaManager.basePath + "cache/"
-
-    /**
      * message displayed when file download finished
      */
     val seedingMessage: String = "Seeding 100.0 %"
