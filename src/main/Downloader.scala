@@ -1,5 +1,7 @@
-import java.io.{InputStreamReader, BufferedReader, InputStream}
-import java.net.{URL, HttpURLConnection}
+package main
+
+import java.io.{BufferedReader, InputStream, InputStreamReader}
+import java.net.{HttpURLConnection, URL}
 import java.util.Base64
 
 object Downloader extends Base {

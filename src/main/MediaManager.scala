@@ -1,9 +1,11 @@
+package main
+
+import java.io.File
+
 import org.json.simple._
 import org.json.simple.parser._
 
 import scala.io.Source._
-
-import java.io.File
 
 /**
  * MediaManager class

@@ -1,3 +1,5 @@
+package main
+
 class Base {
     
     def ex(x: Option[String]) = x match {
