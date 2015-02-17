@@ -20,13 +20,6 @@ object MediaManager extends Base {
     
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
             .map(line => line(0).trim -> line(1).trim).toList: _*)
-
-    val ut: Map[String, String] = Map[String, String](
-        "user" -> "root",
-        "pass" -> ex(config.get("password")),
-        "win_host" -> "127.0.0.1",
-        "other_host" -> ex(config.get("ip"))
-    )
     
     val sourceDir: String = ex(config.get("video_dir"))
     
@@ -55,7 +48,7 @@ object MediaManager extends Base {
                     .trim.toInt).toList: _*)
         )
 
-        processing.foreach { f => println(f.getAbsoluteFile)}
+        processing.foreach { f => println(f.getAbsoluteFile) }
     }
 
 }
