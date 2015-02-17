@@ -16,7 +16,7 @@ import scala.io.Source._
  */
 object MediaManager extends Base {
     
-    val basePath: String = (getClass.getResource(".").getPath + "../../../").drop(1)
+    val basePath: String = (getClass.getResource(".").getPath + "../../../../").drop(1)
     
     val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
             .map(line => line(0).trim -> line(1).trim).toList: _*)
