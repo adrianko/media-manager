@@ -34,7 +34,10 @@ object MediaManager extends Base {
 
     def main(args: Array[String]) {
         checkOS()
-        
+        MediaManager()
+    }
+    
+    def MediaManager(): Unit = {
         val queue: JSONArray = new JSONParser().parse(Downloader.getStatus).asInstanceOf[JSONObject].get("torrents")
                 .asInstanceOf[JSONArray]
 
