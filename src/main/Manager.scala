@@ -4,7 +4,7 @@ import java.io.File
 
 object Manager {
 
-    def rename(file: File) = ()
+    def rename(file: File): Unit = ()
 
     def isVideoFile(f: File): Boolean = (f.getName.takeRight(4).equals(".mp4") || f.getName.takeRight(4).equals(".mkv")) && f.isFile
 

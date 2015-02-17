@@ -40,7 +40,7 @@ object Downloader extends Base {
         }
     }
 
-    def clearSeed(hash: String) = {
+    def clearSeed(hash: String): Unit = {
         sendAction(hash, "stop")
         sendAction(hash, "remove")
     }
