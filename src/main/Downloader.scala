@@ -1,8 +1,10 @@
 package main
 
-import java.io.{BufferedReader, InputStream, InputStreamReader}
+import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 import java.util.Base64
+
+import scala.io.Source._
 
 import main.MediaManager._
 
@@ -34,8 +36,7 @@ object Downloader extends Base {
         if (!content) {
             con.getResponseCode.toString
         } else {
-            val br: BufferedReader = new BufferedReader(new InputStreamReader(con.getContent.asInstanceOf[InputStream]))
-            Stream.continually(br.readLine).takeWhile(_ != null).mkString
+           fromInputStream(con.getContent.asInstanceOf[InputStream]).getLines().mkString
         }
     }
     
