@@ -31,11 +31,6 @@ object DB {
 
     def loadSettings: Map[String, String] = {
         try {
-            class ResultSetIterator(rs: ResultSet) extends Iterator[ResultSet] {
-                def hasNext = rs.next()
-                def next() = rs
-            }
-
             new ResultSetIterator(getStatement.executeQuery("SELECT * FROM settings"))
                 .map(x => (x.getString("property"), x.getString("value"))).toMap
         } catch {
@@ -46,7 +41,19 @@ object DB {
     }
 
     def getKeepList: Map[String, Int] = {
-        Map[String, Int]()
+        try {
+            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM keep"))
+                .map(x => (x.getString("title"), x.getInt("quality"))).toMap
+        } catch {
+            case e: SQLException =>
+                e.printStackTrace()
+                Map[String, Int]()
+        }
+    }
+
+    class ResultSetIterator(rs: ResultSet) extends Iterator[ResultSet] {
+        def hasNext = rs.next()
+        def next() = rs
     }
 
 }
