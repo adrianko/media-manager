@@ -11,8 +11,8 @@ object Downloader extends Base {
     val seedingMessage: String = "Seeding 100.0 %"
 
     def getURL(params: String): String =
-        "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + "/gui/?" + params +
-        "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+        "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + "/gui/?" +
+            params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
     
     def getStatus: String = download(getURL("1=1"), content = true)
     
