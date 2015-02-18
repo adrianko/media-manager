@@ -1,11 +1,12 @@
 package main
 
 import java.io.File
-import java.sql.{DriverManager, Connection}
+import java.sql.{Statement, DriverManager, Connection}
 
 object DB {
 
     var conn: Connection = null
+    var stmt: Statement = null
 
     def getConnection: Connection = {
         if (conn == null) {
