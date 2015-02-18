@@ -3,7 +3,7 @@ package main
 import java.io.File
 import java.sql._
 
-object DB {
+object DB extends Base {
 
     var conn: Connection = null
     var stmt: Statement = null
@@ -12,8 +12,7 @@ object DB {
         if (conn == null) {
             try {
                 Class.forName("org.sqlite.JDBC")
-                conn = DriverManager.getConnection("jdbc:sqlite:" + new File(getClass.getResource(".").getFile)
-                    .getAbsolutePath + "/../../../../db/config.db")
+                conn = DriverManager.getConnection("jdbc:sqlite:" + path + "db/config.db")
             } catch {
                 case e: SQLException => e.printStackTrace()
             }

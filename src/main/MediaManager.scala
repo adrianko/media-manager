@@ -16,8 +16,6 @@ import scala.io.Source._
  * TODO HD files straight to library
  */
 object MediaManager extends Base {
-    
-    val basePath: String = new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../"
 
     val settings: Map[String, String] = DB.loadSettings
 
@@ -41,7 +39,9 @@ object MediaManager extends Base {
             }
         }
 
-        Manager.processFolder(new File(sourceDir).listFiles.toList, DB.getKeepList).foreach { f => println(f.getAbsoluteFile) }
+        Manager.processFolder(new File(sourceDir).listFiles.toList, DB.getKeepList).foreach{
+            f => println(f.getAbsoluteFile)
+        }
     }
 
 }

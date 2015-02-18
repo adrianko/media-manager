@@ -1,6 +1,10 @@
 package main
 
+import java.io.File
+
 class Base {
+
+    val path: String = new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../"
     
     def ex(x: Option[String]) = x match {
         case Some(s) => s
