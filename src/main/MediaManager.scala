@@ -9,6 +9,7 @@ import scala.io.Source._
 
 /**
  * MediaManager class
+ * TODO Use SQLite DB instead of text config file
  * TODO Check can connect to service
  * TODO Process files to be kept
  * TODO SD files move to sync
