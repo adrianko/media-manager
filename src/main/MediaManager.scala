@@ -26,6 +26,8 @@ object MediaManager extends Base {
     
     val keepList: String = basePath + ex(config.get("keep_list"))
 
+    val settings: Map[String, String] = DB.loadSettings
+
     def main(args: Array[String]) {
         checkOS()
         MediaManager()

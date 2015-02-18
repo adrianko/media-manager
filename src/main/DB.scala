@@ -29,7 +29,7 @@ object DB {
         stmt
     }
 
-    def loadSettings(): Unit = {
-
+    def loadSettings: Map[String, String] = {
+        Map[String, String]()
     }
 }
