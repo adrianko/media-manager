@@ -1,7 +1,7 @@
 package main
 
 import java.io.File
-import java.sql.{Statement, DriverManager, Connection}
+import java.sql.{SQLException, Statement, DriverManager, Connection}
 
 object DB {
 
@@ -14,7 +14,7 @@ object DB {
                 Class.forName("org.sqlite.JDBC")
                 conn = DriverManager.getConnection("jdbc:sqlite:" + new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../db/shows.db")
             } catch {
-                case e: Any => e.printStackTrace()
+                case e: SQLException => e.printStackTrace()
             }
         }
 
@@ -32,5 +32,5 @@ object DB {
     def loadSettings: Map[String, String] = {
         Map[String, String]()
     }
-    
+
 }
