@@ -8,7 +8,7 @@ import scala.io.Source._
 
 object Downloader extends Base {
     
-    val seedingMessage: String = "Seeding 100.0 %"
+    val seedingMessage: List[String] = List("Seeding 100.0 %", "[F] Seeding 100.0 %")
 
     def getURL(params: String): String =
         "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + "/gui/?" +

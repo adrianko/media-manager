@@ -31,7 +31,7 @@ object MediaManager extends Base {
         for (i: Int <- 0 to (queue.size() - 1)) {
             val t = queue.get(i).asInstanceOf[JSONArray]
 
-            if (t.get(21).toString.equals(Downloader.seedingMessage)) {
+            if (Downloader.seedingMessage.contains(t.get(21).toString)) {
                 Downloader.clearSeed(t.get(0).toString)
             }
         }
