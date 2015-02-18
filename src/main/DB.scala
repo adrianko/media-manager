@@ -23,7 +23,7 @@ object DB {
 
     def getStatement: Statement = {
         if (stmt == null) {
-            stmt = getConnection.createStatement()
+            stmt = getConnection.createStatement
         }
 
         stmt
@@ -39,7 +39,7 @@ object DB {
             }
 
         } catch {
-            case e: SQLException => e.printStackTrace();
+            case e: SQLException => e.printStackTrace()
         }
 
         settings.toMap
