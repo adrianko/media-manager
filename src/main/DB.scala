@@ -1,7 +1,7 @@
 package main
 
 import java.io.File
-import java.sql.{SQLException, Statement, DriverManager, Connection}
+import java.sql._
 
 object DB {
 
@@ -30,7 +30,19 @@ object DB {
     }
 
     def loadSettings: Map[String, String] = {
-        Map[String, String]()
+        val settings: collection.mutable.Map[String, String] = collection.mutable.Map[String, String]()
+        try {
+            val rs: ResultSet = getStatement.executeQuery("SELECT * FROM settings")
+
+            while (rs.next) {
+                settings += rs.getString("property") -> rs.getString("value")
+            }
+
+        } catch {
+            case e: SQLException => e.printStackTrace();
+        }
+
+        settings.toMap
     }
 
 }
