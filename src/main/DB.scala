@@ -30,15 +30,9 @@ object DB {
     }
 
     def loadSettings: Map[String, String] = {
-        //val settings: collection.mutable.Map[String, String] = collection.mutable.Map[String, String]()
         try {
             val rs: ResultSet = getStatement.executeQuery("SELECT * FROM settings")
 
-            /*
-            while (rs.next) {
-                settings += rs.getString("property") -> rs.getString("value")
-            }
-            */
             class ResultSetIterator(rs: ResultSet) extends Iterator[ResultSet] {
                 def hasNext = rs.next()
                 def next() = rs
@@ -50,9 +44,6 @@ object DB {
                 e.printStackTrace()
                 Map[String, String]()
         }
-
-        //settings.toMap
-
     }
 
 }
