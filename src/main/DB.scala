@@ -1,6 +1,5 @@
 package main
 
-import java.io.File
 import java.sql._
 
 object DB extends Base {

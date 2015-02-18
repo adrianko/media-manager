@@ -5,8 +5,6 @@ import java.io.File
 import org.json.simple._
 import org.json.simple.parser._
 
-import scala.io.Source._
-
 /**
  * MediaManager class
  * TODO Use SQLite DB instead of text config1 file
