@@ -45,4 +45,8 @@ object DB {
         }
     }
 
+    def getKeepList: Map[String, Int] = {
+        Map[String, Int]()
+    }
+
 }

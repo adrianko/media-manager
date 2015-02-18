@@ -9,7 +9,7 @@ import scala.io.Source._
 
 /**
  * MediaManager class
- * TODO Use SQLite DB instead of text config file
+ * TODO Use SQLite DB instead of text config1 file
  * TODO Check can connect to service
  * TODO Process files to be kept
  * TODO SD files move to sync
@@ -18,15 +18,10 @@ import scala.io.Source._
 object MediaManager extends Base {
     
     val basePath: String = new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../"
-    
-    val config: Map[String, String] = Map(fromFile(basePath + "conf/config").getLines().map(_.replace("\n", "").split("="))
-            .map(line => line(0).trim -> line(1).trim).toList: _*)
-    
-    val sourceDir: String = ex(config.get("video_dir"))
-    
-    val keepList: String = basePath + ex(config.get("keep_list"))
 
     val settings: Map[String, String] = DB.loadSettings
+
+    val sourceDir: String = ex(settings.get("video_dir"))
 
     def main(args: Array[String]) {
         checkOS()
@@ -46,12 +41,7 @@ object MediaManager extends Base {
             }
         }
 
-        val processing: Set[File] = Manager.processFolder(new File(sourceDir).listFiles.toList,
-            Map(fromFile(keepList).getLines().map(_.replace("\n", "").split(",")).map(line => line(0).trim -> line(1)
-                    .trim.toInt).toList: _*)
-        )
-
-        processing.foreach { f => println(f.getAbsoluteFile) }
+        Manager.processFolder(new File(sourceDir).listFiles.toList, DB.getKeepList).foreach { f => println(f.getAbsoluteFile) }
     }
 
 }
