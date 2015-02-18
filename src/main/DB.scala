@@ -31,14 +31,13 @@ object DB {
 
     def loadSettings: Map[String, String] = {
         try {
-            val rs: ResultSet = getStatement.executeQuery("SELECT * FROM settings")
-
             class ResultSetIterator(rs: ResultSet) extends Iterator[ResultSet] {
                 def hasNext = rs.next()
                 def next() = rs
             }
 
-            new ResultSetIterator(rs).map(x => (x.getString("property"), x.getString("value"))).toMap
+            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM settings"))
+                .map(x => (x.getString("property"), x.getString("value"))).toMap
         } catch {
             case e: SQLException =>
                 e.printStackTrace()
