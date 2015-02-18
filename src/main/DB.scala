@@ -12,7 +12,8 @@ object DB {
         if (conn == null) {
             try {
                 Class.forName("org.sqlite.JDBC")
-                conn = DriverManager.getConnection("jdbc:sqlite:" + new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../db/config.db")
+                conn = DriverManager.getConnection("jdbc:sqlite:" + new File(getClass.getResource(".").getFile)
+                    .getAbsolutePath + "/../../../../db/config.db")
             } catch {
                 case e: SQLException => e.printStackTrace()
             }
