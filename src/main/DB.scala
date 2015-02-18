@@ -21,6 +21,14 @@ object DB {
         conn
     }
 
+    def getStatement: Statement = {
+        if (stmt == null) {
+            stmt = getConnection.createStatement()
+        }
+
+        stmt
+    }
+
     def loadSettings(): Unit = {
 
     }
