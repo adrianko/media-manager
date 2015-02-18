@@ -22,9 +22,7 @@ object DB {
     }
 
     def getStatement: Statement = {
-        if (stmt == null) {
-            stmt = getConnection.createStatement
-        }
+        if (stmt == null) stmt = getConnection.createStatement
 
         stmt
     }
