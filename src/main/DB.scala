@@ -32,4 +32,5 @@ object DB {
     def loadSettings: Map[String, String] = {
         Map[String, String]()
     }
+    
 }
