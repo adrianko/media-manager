@@ -16,8 +16,6 @@ object MediaManager extends Base {
 
     val settings: Map[String, String] = DB.loadSettings
 
-    val sourceDir: String = ex(settings.get("video_dir"))
-
     def main(args: Array[String]) {
         checkOS()
         checkService()
@@ -37,7 +35,7 @@ object MediaManager extends Base {
             }
         }
 
-        Manager.processFolder(new File(sourceDir).listFiles.toList, DB.getKeepList).foreach{
+        Manager.processFolder(new File(ex(settings.get("video_dir"))).listFiles.toList, DB.getKeepList).foreach{
             f => println(f.getAbsoluteFile)
         }
     }
