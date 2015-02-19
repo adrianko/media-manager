@@ -5,11 +5,12 @@ import java.io.File
 object Manager {
     
     val exclusionExtensions: List[String] = List(".txt", ".nfo")
+    
+    val videoFileExtensions: List[String] = List(".mkv", ".mp4")
 
     def rename(file: File): Unit = ()
 
-    def isVideoFile(f: File): Boolean =
-        (f.getName.takeRight(4).equals(".mp4") || f.getName.takeRight(4).equals(".mkv")) && f.isFile
+    def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
 
     def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
         var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
