@@ -26,7 +26,7 @@ object MediaManager extends Base {
     def MediaManager(): Unit = {
         val queue: JSONArray = new JSONParser().parse(Downloader.getStatus).asInstanceOf[JSONObject].get("torrents")
                 .asInstanceOf[JSONArray]
-
+        
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (queue.size() - 1)) {
             val t = queue.get(i).asInstanceOf[JSONArray]
