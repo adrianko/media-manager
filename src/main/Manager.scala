@@ -3,6 +3,8 @@ package main
 import java.io.File
 
 object Manager {
+    
+    val exclusionExtensions: List[String] = List(".txt", ".nfo")
 
     def rename(file: File): Unit = ()
 
@@ -25,7 +27,7 @@ object Manager {
                     } else {
                         processing ++= processFolder(f.listFiles.toList, keepList)
                     }
-                } else if (f.getName.takeRight(4).equals(".nfo") || f.getName.takeRight(4).equals(".txt")) {
+                } else if (exclusionExtensions.contains(f.getName.takeRight(4))) {
                     f.delete()
                 } else if (f.getName.takeRight(4).equals(".srt")) {
                     processing += f
