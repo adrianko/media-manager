@@ -20,6 +20,7 @@ object MediaManager extends Base {
 
     def main(args: Array[String]) {
         checkOS()
+        checkService()
         MediaManager()
     }
     
