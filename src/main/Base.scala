@@ -1,6 +1,8 @@
 package main
 
-import java.io.File
+import java.io._
+
+import scala.io.Source._
 
 class Base {
 
@@ -19,7 +21,14 @@ class Base {
     }
     
     def checkService: Boolean = {
-        true
+        try {
+            fromInputStream(Runtime.getRuntime.exec("tasklist.exe").getInputStream).getLines().mkString
+                    .contains(ex(MediaManager.settings.get("dl_exe")))
+        } catch {
+            case e: IOException => 
+                e.printStackTrace()
+                false
+        }
     }
 
 }
