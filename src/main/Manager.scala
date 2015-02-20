@@ -11,6 +11,8 @@ object Manager {
     val keepExtensions: List[String] = List(".srt")
 
     def rename(file: File): Unit = () //invoke filebot
+    
+    def move(src: File, dest: File): Unit = ()
 
     def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
 
