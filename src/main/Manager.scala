@@ -8,7 +8,7 @@ object Manager {
     
     val videoFileExtensions: List[String] = List(".mkv", ".mp4")
 
-    def rename(file: File): Unit = ()
+    def rename(file: File): Unit = () //invoke filebot
 
     def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
 
