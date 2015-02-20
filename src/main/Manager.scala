@@ -15,7 +15,7 @@ object Manager {
     def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
 
     def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
-        var processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
+        val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
 
         files.foreach { f: File =>
 
