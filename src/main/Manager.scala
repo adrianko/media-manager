@@ -7,6 +7,8 @@ object Manager {
     val exclusionExtensions: List[String] = List(".txt", ".nfo")
     
     val videoFileExtensions: List[String] = List(".mkv", ".mp4")
+    
+    val keepExtensions: List[String] = List(".srt")
 
     def rename(file: File): Unit = () //invoke filebot
 
