@@ -2,9 +2,7 @@ package main
 
 import java.io.File
 
-import main.MediaManager._
-
-object Manager {
+object Manager extends Base {
     
     val exclusionExtensions: List[String] = List(".txt", ".nfo")
     
@@ -12,7 +10,7 @@ object Manager {
     
     val keepExtensions: List[String] = List(".srt")
     
-    val fileList = new File(ex(settings.get("video_dir"))).listFiles.toList
+    val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
     def rename(file: File): Unit = () //invoke filebot
     

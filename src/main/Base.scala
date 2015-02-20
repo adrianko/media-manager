@@ -2,7 +2,7 @@ package main
 
 import java.io.{File, IOException}
 
-import scala.io.Source._
+import scala.io.Source.fromInputStream
 
 class Base {
 

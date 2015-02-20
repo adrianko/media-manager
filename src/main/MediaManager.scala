@@ -1,7 +1,5 @@
 package main
 
-import org.json.simple.JSONArray
-
 /**
  * MediaManager class
  * TODO Process files to be kept
