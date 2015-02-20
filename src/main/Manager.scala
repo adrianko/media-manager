@@ -22,7 +22,7 @@ object Manager {
             // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
 
-                if (f.getName.contains(t) && isVideoFile(f)) {
+                if (f.getName.contains(t) && isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4))) {
                     processing += f
                 } else if (f.isDirectory) {
                     if (f.getName.toLowerCase.contains("sample")) {
@@ -32,8 +32,6 @@ object Manager {
                     }
                 } else if (exclusionExtensions.contains(f.getName.takeRight(4))) {
                     f.delete()
-                } else if (f.getName.takeRight(4).equals(".srt")) {
-                    processing += f
                 }
                 // otherwise ignore completely
             }
