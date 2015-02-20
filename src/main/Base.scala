@@ -21,7 +21,7 @@ class Base {
     def checkOS(): Unit = {
         if (!System.getProperty("os.name").contains("Windows")) {
             println("This application is not designed to run on any operating system other than Windows. Sorry.")
-            System.exit(0)
+            exit(0)
         }
     }
     
@@ -30,12 +30,12 @@ class Base {
             if (!fromInputStream(Runtime.getRuntime.exec("tasklist.exe").getInputStream).getLines().mkString
                     .contains(ex(MediaManager.settings.get("dl_exe")))) {
                 println("Service not running. Sorry.")
-                System.exit(0)
+                exit(0)
             }
         } catch {
             case e: IOException => 
                 e.printStackTrace()
-                System.exit(0)
+                exit(0)
         }
     }
 
