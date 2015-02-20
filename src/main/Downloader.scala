@@ -30,7 +30,7 @@ object Downloader extends Base {
         fromInputStream(con.getContent.asInstanceOf[InputStream]).getLines().mkString
     }
 
-    def clearSeed(hash: String): Unit = {
+    def clear(hash: String): Unit = {
         sendAction(hash, "stop")
         sendAction(hash, "remove")
     }
