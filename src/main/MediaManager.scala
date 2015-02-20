@@ -1,6 +1,6 @@
 package main
 
-import org.json.simple.{JSONArray}
+import org.json.simple.JSONArray
 
 /**
  * MediaManager class
