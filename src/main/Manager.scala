@@ -24,12 +24,8 @@ object Manager {
 
                 if (f.getName.contains(t) && isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4))) {
                     processing += f
-                } else if (f.isDirectory) {
-                    if (f.getName.toLowerCase.contains("sample")) {
-                        f.delete()
-                    } else {
-                        processing ++= processFolder(f.listFiles.toList, keepList)
-                    }
+                } else if (f.isDirectory && !f.getName.toLowerCase.contains("sample")) {
+                    processing ++= processFolder(f.listFiles.toList, keepList)
                 } else if (exclusionExtensions.contains(f.getName.takeRight(4))) {
                     f.delete()
                 }
