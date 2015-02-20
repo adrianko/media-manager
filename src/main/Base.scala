@@ -13,6 +13,11 @@ class Base {
         case None => ""
     }
     
+    def exit(code: Int): Unit = {
+        println("Exiting...")
+        System.exit(code)
+    }
+    
     def checkOS(): Unit = {
         if (!System.getProperty("os.name").contains("Windows")) {
             println("This application is not designed to run on any operating system other than Windows. Sorry.")

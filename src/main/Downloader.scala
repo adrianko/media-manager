@@ -16,7 +16,7 @@ object Downloader extends Base {
     
     def getStatus: String = download(getURL("1=1"))
     
-    def sendAction(hash: String, action: String) = download(getURL("action=" + action + "&hash=" + hash))
+    def sendAction(hash: String, action: String): String = download(getURL("action=" + action + "&hash=" + hash))
     
     def download(url: String): String = {
         val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
