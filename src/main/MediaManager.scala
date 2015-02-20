@@ -2,8 +2,8 @@ package main
 
 import java.io.File
 
-import org.json.simple._
-import org.json.simple.parser._
+import org.json.simple.{JSONArray, JSONObject}
+import org.json.simple.parser.JSONParser
 
 /**
  * MediaManager class

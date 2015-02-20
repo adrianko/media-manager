@@ -1,6 +1,6 @@
 package main
 
-import java.io._
+import java.io.{File, IOException}
 
 import scala.io.Source._
 

@@ -4,7 +4,7 @@ import java.io.InputStream
 import java.net.{HttpURLConnection, URL}
 import java.util.Base64
 
-import scala.io.Source._
+import scala.io.Source.fromInputStream
 
 object Downloader extends Base {
     

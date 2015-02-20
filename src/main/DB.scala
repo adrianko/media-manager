@@ -1,6 +1,6 @@
 package main
 
-import java.sql._
+import java.sql.{Connection, Statement, DriverManager, SQLException, ResultSet}
 
 object DB extends Base {
 
