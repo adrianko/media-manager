@@ -9,6 +9,8 @@ import scala.io.Source.fromInputStream
 object Downloader extends Base {
     
     val seedingMessage: List[String] = List("Seeding 100.0 %", "[F] Seeding 100.0 %")
+    
+    def complete(msg: String): Boolean = seedingMessage.contains(msg)
 
     def getURL(params: String): String =
         "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + "/gui/?" +
