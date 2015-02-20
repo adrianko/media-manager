@@ -23,7 +23,7 @@ object Manager {
                 if (f.getName.contains(t) && isVideoFile(f)) {
                     processing += f
                 } else if (f.isDirectory) {
-                    if (f.getName.contains("sample")) {
+                    if (f.getName.toLowerCase.contains("sample")) {
                         f.delete()
                     } else {
                         processing ++= processFolder(f.listFiles.toList, keepList)
