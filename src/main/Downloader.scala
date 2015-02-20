@@ -5,6 +5,8 @@ import java.net.{HttpURLConnection, URL}
 import java.util.Base64
 
 import scala.io.Source.fromInputStream
+import org.json.simple.{JSONArray, JSONObject}
+import org.json.simple.parser.JSONParser
 
 object Downloader extends Base {
     
@@ -34,5 +36,7 @@ object Downloader extends Base {
         sendAction(hash, "stop")
         sendAction(hash, "remove")
     }
+    
+    def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents").asInstanceOf[JSONArray]
 
 }

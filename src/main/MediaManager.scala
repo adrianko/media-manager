@@ -1,9 +1,6 @@
 package main
 
-import java.io.File
-
-import org.json.simple.{JSONArray, JSONObject}
-import org.json.simple.parser.JSONParser
+import org.json.simple.{JSONArray}
 
 /**
  * MediaManager class
@@ -22,8 +19,7 @@ object MediaManager extends Base {
     }
     
     def MediaManager(): Unit = {
-        val queue: JSONArray = new JSONParser().parse(Downloader.getStatus).asInstanceOf[JSONObject].get("torrents")
-                .asInstanceOf[JSONArray]
+        val queue: JSONArray = Downloader.getQueue
         
         //JSON array doesn't support foreach. Maybe use an iterator?
         for (i: Int <- 0 to (queue.size() - 1)) {
