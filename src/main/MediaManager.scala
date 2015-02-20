@@ -30,9 +30,7 @@ object MediaManager extends Base {
             }
         }
 
-        Manager.processFolder(Manager.fileList, DB.getKeepList).foreach{
-            f => println(f.getAbsoluteFile)
-        }
+        Manager.processFolder(Manager.fileList, DB.getKeepList).foreach{ f => println(f.getAbsoluteFile) }
     }
 
 }
