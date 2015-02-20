@@ -19,6 +19,8 @@ object Manager {
     def move(src: File, dest: File): Unit = ()
 
     def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
+    
+    def processFolder(): Set[File] = processFolder(fileList, DB.getKeepList)
 
     def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
         val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
