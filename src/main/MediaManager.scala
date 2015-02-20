@@ -34,7 +34,7 @@ object MediaManager extends Base {
             }
         }
 
-        Manager.processFolder(new File(ex(settings.get("video_dir"))).listFiles.toList, DB.getKeepList).foreach{
+        Manager.processFolder(Manager.fileList, DB.getKeepList).foreach{
             f => println(f.getAbsoluteFile)
         }
     }
