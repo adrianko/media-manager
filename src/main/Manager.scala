@@ -12,16 +12,6 @@ object Manager extends Base {
         "deleteDir" -> List("sample")
     )
     
-    val deleteExtensions: List[String] = List(".txt", ".nfo")
-    
-    val videoFileExtensions: List[String] = List(".mkv", ".mp4")
-    
-    val keepExtensions: List[String] = List(".srt")
-
-    val excludeFolders: List[String] = List(".sync")
-
-    val deleteFolders: List[String] = List("sample")
-    
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
     def rename(file: File): Unit = () //invoke filebot
@@ -41,15 +31,15 @@ object Manager extends Base {
             keepList.keys.foreach { t =>
 
                 if (f.isFile) {
-                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
+                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || exList(fileDirSettings.get("keepExt")).contains(f.getName.takeRight(4)))) {
                         processing += f
-                    } else if (deleteExtensions.contains(f.getName.takeRight(4))) {
+                    } else if (exList(fileDirSettings.get("deleteExt")).contains(f.getName.takeRight(4))) {
                         f.delete()
                     }
                 } else if (f.isDirectory) {
-                    if (deleteFolders.contains(f.getName.toLowerCase)) {
+                    if (exList(fileDirSettings.get("deleteDir")).contains(f.getName.toLowerCase)) {
                         f.delete()
-                    } else if(!excludeFolders.contains(f.getName)) {
+                    } else if(!exList(fileDirSettings.get("excludeDir")).contains(f.getName)) {
                         processing ++= processFolder(f.listFiles.toList, keepList)
                     }
                 }
