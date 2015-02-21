@@ -9,6 +9,8 @@ object Manager extends Base {
     val videoFileExtensions: List[String] = List(".mkv", ".mp4")
     
     val keepExtensions: List[String] = List(".srt")
+
+    val excludeFolders: List[String] = List(".sync")
     
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
@@ -30,7 +32,7 @@ object Manager extends Base {
 
                 if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
                     processing += f
-                } else if (f.isDirectory) {
+                } else if (f.isDirectory && !excludeFolders.contains(f.getName)) {
                     if (f.getName.toLowerCase.contains("sample")) {
                         f.delete()
                     } else {
