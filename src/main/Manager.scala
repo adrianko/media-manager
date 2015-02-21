@@ -12,7 +12,7 @@ object Manager extends Base {
         "deleteDir" -> List("sample")
     )
 
-    val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
+    val fileList = new File(ex(MediaManager.settings.get("video_dir")))
 
     def rename(file: File): Unit = () //invoke filebot
     
@@ -20,7 +20,7 @@ object Manager extends Base {
 
     def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFile")).contains(f.getName.takeRight(4)) && f.isFile
     
-    def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
+    def retrieveFiles(): Set[File] = retrieveFiles(fileList.listFiles.toList, DB.getKeepList)
 
     def retrieveFiles(files: List[File], keepList: Map[String, Int]): Set[File] = {
         val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
@@ -50,5 +50,7 @@ object Manager extends Base {
 
         processing.toSet
     }
+
+    def cleanupFolder(): Unit = fileList.listFiles.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
     
 }
