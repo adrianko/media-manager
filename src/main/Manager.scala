@@ -15,7 +15,7 @@ object Manager extends Base {
     )
 
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
-    
+
     val processingList = new File(ex(MediaManager.settings.get("processes_dir"))).listFiles.toList
 
     def rename(file: File): Unit =
@@ -68,5 +68,7 @@ object Manager extends Base {
     }
 
     def cleanupFolder(): Unit = fileList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
+
+    def processFolder(files: List[File]): Unit = processingList.foreach(rename)
     
 }
