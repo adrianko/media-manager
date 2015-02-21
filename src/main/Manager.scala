@@ -11,7 +11,7 @@ object Manager extends Base {
         "excludeDir" -> List(".sync"),
         "deleteDir" -> List("sample")
     )
-    
+
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
     def rename(file: File): Unit = () //invoke filebot
@@ -20,9 +20,9 @@ object Manager extends Base {
 
     def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFile")).contains(f.getName.takeRight(4)) && f.isFile
     
-    def processFolder(): Set[File] = processFolder(fileList, DB.getKeepList)
+    def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
 
-    def processFolder(files: List[File], keepList: Map[String, Int]): Set[File] = {
+    def retrieveFiles(files: List[File], keepList: Map[String, Int]): Set[File] = {
         val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
 
         files.foreach { f: File =>
