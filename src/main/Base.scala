@@ -12,6 +12,11 @@ class Base {
         case Some(s) => s
         case None => ""
     }
+
+    def exList(x: Option[List[String]]) = x match {
+        case Some(s) => s
+        case None => List()
+    }
     
     def exit(code: Int): Unit = {
         println("Exiting...")

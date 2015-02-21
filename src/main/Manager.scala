@@ -28,7 +28,7 @@ object Manager extends Base {
     
     def move(src: File, dest: File): Unit = ()
 
-    def isVideoFile(f: File): Boolean = videoFileExtensions.contains(f.getName.takeRight(4)) && f.isFile
+    def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFile")).contains(f.getName.takeRight(4)) && f.isFile
     
     def processFolder(): Set[File] = processFolder(fileList, DB.getKeepList)
 
