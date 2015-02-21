@@ -3,6 +3,14 @@ package main
 import java.io.File
 
 object Manager extends Base {
+
+    val fileDirSettings: Map[String, List[String]] = Map[String, List[String]](
+        "deleteExt" -> List(".txt", ".nfo"),
+        "videoFile" -> List(".mp4", ".mkv"),
+        "keepExt" -> List(".srt"),
+        "excludeDir" -> List(".sync"),
+        "deleteDir" -> List("sample")
+    )
     
     val deleteExtensions: List[String] = List(".txt", ".nfo")
     
