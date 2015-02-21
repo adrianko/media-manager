@@ -11,6 +11,8 @@ object Manager extends Base {
     val keepExtensions: List[String] = List(".srt")
 
     val excludeFolders: List[String] = List(".sync")
+
+    val deleteFolders: List[String] = List("sample")
     
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
@@ -37,7 +39,7 @@ object Manager extends Base {
                         f.delete()
                     }
                 } else if (f.isDirectory && !excludeFolders.contains(f.getName)) {
-                    if (f.getName.toLowerCase.contains("sample")) {
+                    if (deleteFolders.contains(f.getName.toLowerCase)) {
                         f.delete()
                     } else {
                         processing ++= processFolder(f.listFiles.toList, keepList)
