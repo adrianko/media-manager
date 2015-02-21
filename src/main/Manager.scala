@@ -18,7 +18,8 @@ object Manager extends Base {
     
     def move(src: File, dest: File): Unit = ()
 
-    def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFile")).contains(f.getName.takeRight(4)) && f.isFile
+    def isVideoFile(f: File): Boolean =
+        exList(fileDirSettings.get("videoFile")).contains(f.getName.toLowerCase.takeRight(4)) && f.isFile
     
     def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
 
@@ -29,18 +30,19 @@ object Manager extends Base {
 
             // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
+                val fileName: String = f.getName.toLowerCase
 
                 if (f.isFile) {
-                    if (f.getName.toLowerCase.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
-                        exList(fileDirSettings.get("keepExt")).contains(f.getName.takeRight(4)))) {
+                    if (fileName.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
+                        exList(fileDirSettings.get("keepExt")).contains(fileName.takeRight(4)))) {
                         processing += f
-                    } else if (exList(fileDirSettings.get("deleteExt")).contains(f.getName.takeRight(4))) {
+                    } else if (exList(fileDirSettings.get("deleteExt")).contains(fileName.takeRight(4))) {
                         f.delete()
                     }
                 } else if (f.isDirectory) {
-                    if (exList(fileDirSettings.get("deleteDir")).contains(f.getName.toLowerCase)) {
+                    if (exList(fileDirSettings.get("deleteDir")).contains(fileName)) {
                         f.delete()
-                    } else if(!exList(fileDirSettings.get("excludeDir")).contains(f.getName.toLowerCase)) {
+                    } else if(!exList(fileDirSettings.get("excludeDir")).contains(fileName)) {
                         processing ++= retrieveFiles(f.listFiles.toList, keepList)
                     }
                 }
