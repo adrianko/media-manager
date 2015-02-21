@@ -20,7 +20,7 @@ object Manager extends Base {
 
     def rename(file: File): Unit =
         Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
-            "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
+            "--db", "TVRage", "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
     
     def move(src: File): Unit = {
         val srcFIS = new FileInputStream(src)
