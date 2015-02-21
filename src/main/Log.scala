@@ -1,5 +1,0 @@
-package main
-
-object Log {
-
-}
