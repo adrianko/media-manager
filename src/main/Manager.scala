@@ -21,12 +21,11 @@ object Manager extends Base {
             "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
     
     def move(src: File): Unit = {
-        val dest = new File(ex(MediaManager.settings.get("processed_dir")) + "/" + src.getName)
         val srcFIS = new FileInputStream(src)
-        val destFIS = new FileOutputStream(dest)
+        val destFIS = new FileOutputStream(new File(ex(MediaManager.settings.get("processed_dir")) + "/" + src.getName))
         destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
-        srcFIS.close()
         destFIS.close()
+        srcFIS.close()
         src.delete
     }
 
