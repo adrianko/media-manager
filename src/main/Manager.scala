@@ -5,9 +5,9 @@ import java.io.File
 object Manager extends Base {
 
     val fileDirSettings: Map[String, List[String]] = Map[String, List[String]](
-        "deleteExt" -> List(".txt", ".nfo"),
-        "videoFile" -> List(".mp4", ".mkv"),
-        "keepExt" -> List(".srt"),
+        "deleteExt" -> List("txt", "nfo"),
+        "videoFileExt" -> List("mp4", "mkv"),
+        "keepExt" -> List("srt"),
         "excludeDir" -> List(".sync"),
         "deleteDir" -> List("sample")
     )
@@ -21,7 +21,7 @@ object Manager extends Base {
     def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf("."))
 
     def isVideoFile(f: File): Boolean =
-        exList(fileDirSettings.get("videoFile")).contains(f.getName.toLowerCase.takeRight(4)) && f.isFile
+        exList(fileDirSettings.get("videoFileExt")).contains(f.getName.toLowerCase.takeRight(4)) && f.isFile
     
     def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
 
