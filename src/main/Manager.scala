@@ -40,7 +40,7 @@ object Manager extends Base {
                     if (exList(fileDirSettings.get("deleteDir")).contains(f.getName.toLowerCase)) {
                         f.delete()
                     } else if(!exList(fileDirSettings.get("excludeDir")).contains(f.getName)) {
-                        processing ++= processFolder(f.listFiles.toList, keepList)
+                        processing ++= retrieveFiles(f.listFiles.toList, keepList)
                     }
                 }
                 // otherwise ignore completely
