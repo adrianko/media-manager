@@ -31,7 +31,8 @@ object Manager extends Base {
             keepList.keys.foreach { t =>
 
                 if (f.isFile) {
-                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || exList(fileDirSettings.get("keepExt")).contains(f.getName.takeRight(4)))) {
+                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || exList(fileDirSettings.get("keepExt"))
+                        .contains(f.getName.takeRight(4)))) {
                         processing += f
                     } else if (exList(fileDirSettings.get("deleteExt")).contains(f.getName.takeRight(4))) {
                         f.delete()
