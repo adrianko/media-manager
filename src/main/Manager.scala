@@ -18,10 +18,9 @@ object Manager extends Base {
     
     def move(src: File, dest: File): Unit = ()
 
-    def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf("."))
+    def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
 
-    def isVideoFile(f: File): Boolean =
-        exList(fileDirSettings.get("videoFileExt")).contains(f.getName.toLowerCase.takeRight(4)) && f.isFile
+    def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFileExt")).contains(fileExt(f)) && f.isFile
     
     def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
 
@@ -36,9 +35,9 @@ object Manager extends Base {
 
                 if (f.isFile) {
                     if (fileName.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
-                        exList(fileDirSettings.get("keepExt")).contains(fileName.takeRight(4)))) {
+                        exList(fileDirSettings.get("keepExt")).contains(fileExt(f)))) {
                         processing += f
-                    } else if (exList(fileDirSettings.get("deleteExt")).contains(fileName.takeRight(4))) {
+                    } else if (exList(fileDirSettings.get("deleteExt")).contains(fileExt(f))) {
                         f.delete()
                     }
                 } else if (f.isDirectory) {
