@@ -18,7 +18,7 @@ object MediaManager extends Base {
     
     def MediaManager(): Unit = {
         Downloader.clearFinished()
-        Manager.retrieveFiles().foreach{ f => println( Manager.rename(f.getAbsoluteFile)) }
+        Manager.retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
         Manager.cleanupFolder()
     }
 

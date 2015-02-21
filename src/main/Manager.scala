@@ -1,6 +1,6 @@
 package main
 
-import java.io.File
+import java.io.{FileInputStream, FileOutputStream, File}
 
 import sys.process._
 
@@ -20,7 +20,15 @@ object Manager extends Base {
         Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
             "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
     
-    def move(src: File, dest: File): Unit = ()
+    def move(src: File): Unit = {
+        val dest = new File(ex(MediaManager.settings.get("processed_dir")) + "/" + src.getName)
+        val srcFIS = new FileInputStream(src)
+        val destFIS = new FileOutputStream(dest)
+        destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
+        srcFIS.close()
+        destFIS.close()
+        src.delete
+    }
 
     def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
 
@@ -42,11 +50,11 @@ object Manager extends Base {
                         exList(fileDirSettings.get("keepExt")).contains(fileExt(f)))) {
                         processing += f
                     } else if (exList(fileDirSettings.get("deleteExt")).contains(fileExt(f))) {
-                        f.delete()
+                        f.delete
                     }
                 } else if (f.isDirectory) {
                     if (exList(fileDirSettings.get("deleteDir")).contains(fileName)) {
-                        f.delete()
+                        f.delete
                     } else if(!exList(fileDirSettings.get("excludeDir")).contains(fileName)) {
                         processing ++= retrieveFiles(f.listFiles.toList, keepList)
                     }
