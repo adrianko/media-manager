@@ -18,6 +18,8 @@ object Manager extends Base {
     
     def move(src: File, dest: File): Unit = ()
 
+    def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf("."))
+
     def isVideoFile(f: File): Boolean =
         exList(fileDirSettings.get("videoFile")).contains(f.getName.toLowerCase.takeRight(4)) && f.isFile
     
