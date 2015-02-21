@@ -21,6 +21,7 @@ object MediaManager extends Base {
         Manager.retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
         Manager.processFolder()
         Manager.cleanupFolder()
+        MediaLibrary.refresh()
     }
 
 }
