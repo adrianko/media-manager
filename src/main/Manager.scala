@@ -4,7 +4,7 @@ import java.io.File
 
 object Manager extends Base {
     
-    val exclusionExtensions: List[String] = List(".txt", ".nfo")
+    val deleteExtensions: List[String] = List(".txt", ".nfo")
     
     val videoFileExtensions: List[String] = List(".mkv", ".mp4")
     
@@ -30,16 +30,18 @@ object Manager extends Base {
             // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
 
-                if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
-                    processing += f
+                if (f.isFile) {
+                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
+                        processing += f
+                    } else if (deleteExtensions.contains(f.getName.takeRight(4))) {
+                        f.delete()
+                    }
                 } else if (f.isDirectory && !excludeFolders.contains(f.getName)) {
                     if (f.getName.toLowerCase.contains("sample")) {
                         f.delete()
                     } else {
                         processing ++= processFolder(f.listFiles.toList, keepList)
                     }
-                } else if (exclusionExtensions.contains(f.getName.takeRight(4))) {
-                    f.delete()
                 }
                 // otherwise ignore completely
             }
