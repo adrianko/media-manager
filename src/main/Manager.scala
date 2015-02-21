@@ -28,7 +28,7 @@ object Manager extends Base {
             // match files in keep list to files found in directory
             keepList.keys.foreach { t =>
 
-                if (f.getName.contains(t) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
+                if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || keepExtensions.contains(f.getName.takeRight(4)))) {
                     processing += f
                 } else if (f.isDirectory) {
                     if (f.getName.toLowerCase.contains("sample")) {
