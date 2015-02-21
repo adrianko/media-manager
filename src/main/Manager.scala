@@ -38,10 +38,10 @@ object Manager extends Base {
                     } else if (deleteExtensions.contains(f.getName.takeRight(4))) {
                         f.delete()
                     }
-                } else if (f.isDirectory && !excludeFolders.contains(f.getName)) {
+                } else if (f.isDirectory) {
                     if (deleteFolders.contains(f.getName.toLowerCase)) {
                         f.delete()
-                    } else {
+                    } else if(!excludeFolders.contains(f.getName)) {
                         processing ++= processFolder(f.listFiles.toList, keepList)
                     }
                 }
