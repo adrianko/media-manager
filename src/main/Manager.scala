@@ -28,7 +28,7 @@ object Manager extends Base {
         destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
         destFIS.close()
         srcFIS.close()
-        src.delete
+        //src.delete
     }
 
     def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
