@@ -2,6 +2,8 @@ package main
 
 import java.io.File
 
+import sys.process._
+
 object Manager extends Base {
 
     val fileDirSettings: Map[String, List[String]] = Map[String, List[String]](
@@ -14,7 +16,9 @@ object Manager extends Base {
 
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
-    def rename(file: File): Unit = () //invoke filebot
+    def rename(file: File): Unit =
+        Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
+            "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
     
     def move(src: File, dest: File): Unit = ()
 
