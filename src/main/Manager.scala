@@ -31,8 +31,8 @@ object Manager extends Base {
             keepList.keys.foreach { t =>
 
                 if (f.isFile) {
-                    if (f.getName.contains(t.replace(" ", ".")) && (isVideoFile(f) || exList(fileDirSettings.get("keepExt"))
-                        .contains(f.getName.takeRight(4)))) {
+                    if (f.getName.toLowerCase.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
+                        exList(fileDirSettings.get("keepExt")).contains(f.getName.takeRight(4)))) {
                         processing += f
                     } else if (exList(fileDirSettings.get("deleteExt")).contains(f.getName.takeRight(4))) {
                         f.delete()
@@ -40,7 +40,7 @@ object Manager extends Base {
                 } else if (f.isDirectory) {
                     if (exList(fileDirSettings.get("deleteDir")).contains(f.getName.toLowerCase)) {
                         f.delete()
-                    } else if(!exList(fileDirSettings.get("excludeDir")).contains(f.getName)) {
+                    } else if(!exList(fileDirSettings.get("excludeDir")).contains(f.getName.toLowerCase)) {
                         processing ++= retrieveFiles(f.listFiles.toList, keepList)
                     }
                 }
