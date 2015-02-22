@@ -9,13 +9,13 @@ object MediaLibrary extends Base {
     lazy val processingList = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
 
     def retrieveFiles(): Unit = {
-        val showFolders:Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)
+        val showFolders: Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)
             .map(d => d.getName -> d).toList: _*)
 
         showFolders.foreach{ case (t: String, f: File) => println(f.getAbsolutePath) }
     }
 
-    def move(src: File): Unit = {
+    def move(src: File, dest: File): Unit = {
         processingList.foreach(println)
         //need to do some title matching with media folders
     }
