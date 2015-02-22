@@ -18,7 +18,13 @@ object MediaManager extends Base {
     
     def MediaManager(): Unit = {
         Downloader.clearFinished()
-        Manager.retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
+        Manager.retrieveFiles().foreach{ f =>
+            if (f.getName.toLowerCase.contains("1080p")) {
+                Manager.move(f.getAbsoluteFile)
+            } else {
+                Manager.copy(f.getAbsoluteFile)
+            }
+        }
         Manager.processFolder()
         Manager.cleanupFolder()
         MediaLibrary.retrieveFiles()
