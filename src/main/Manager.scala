@@ -14,7 +14,7 @@ object Manager extends Base {
         "deleteDir" -> List("sample")
     )
 
-    val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
+    val fileList = new File(ex(MediaManager.settings.get("video_dir")))
 
     val processingList = new File(ex(MediaManager.settings.get("processed_dir")))
 
@@ -39,7 +39,7 @@ object Manager extends Base {
 
     def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFileExt")).contains(fileExt(f)) && f.isFile
     
-    def retrieveFiles(): Set[File] = retrieveFiles(fileList, DB.getKeepList)
+    def retrieveFiles(): Set[File] = retrieveFiles(fileList.listFiles.toList, DB.getKeepList)
 
     def retrieveFiles(files: List[File], keepList: Map[String, Int]): Set[File] = {
         val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
@@ -71,7 +71,7 @@ object Manager extends Base {
         processing.toSet
     }
 
-    def cleanupFolder(): Unit = fileList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
+    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
 
     def processFolder(): Unit = processingList.listFiles.toList.foreach(rename)
     
