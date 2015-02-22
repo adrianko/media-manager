@@ -1,6 +1,6 @@
 package main
 
-import java.io.File
+import java.io.{FileOutputStream, FileInputStream, File}
 
 object MediaLibrary extends Base {
 
@@ -13,11 +13,15 @@ object MediaLibrary extends Base {
             .map(d => d.getName -> d).toList: _*)
 
         showFolders.foreach{ case (t: String, f: File) => println(f.getAbsolutePath) }
+        //need to do some title matching with media folders
     }
 
-    def move(src: File, dest: File): Unit = {
-        processingList.foreach(println)
-        //need to do some title matching with media folders
+    def copy(src: File, dest: File): Unit = {
+        val srcFIS = new FileInputStream(src)
+        val destFIS = new FileOutputStream(dest)
+        destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
+        destFIS.close()
+        srcFIS.close()
     }
 
     def refresh(): Unit = Downloader.download("http://" + ex(MediaManager.settings.get("lib_host")) + ":" +
