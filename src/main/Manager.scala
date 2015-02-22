@@ -22,13 +22,17 @@ object Manager extends Base {
         Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
             "--db", "TVRage", "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
     
-    def move(src: File): Unit = {
+    def copy(src: File): Unit = {
         val srcFIS = new FileInputStream(src)
         val destFIS = new FileOutputStream(new File(ex(MediaManager.settings.get("processed_dir")) + "/" + src.getName))
         destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
         destFIS.close()
         srcFIS.close()
-        //src.delete
+    }
+
+    def move(src: File): Unit = {
+        copy(src)
+        src.delete
     }
 
     def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
