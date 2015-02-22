@@ -11,6 +11,8 @@ object MediaLibrary extends Base {
     def retrieveFiles(): Unit = {
         val showFolders:Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)
             .map(d => d.getName -> d).toList: _*)
+
+        showFolders.foreach{ case (t: String, f: File) => println(f.getAbsolutePath) }
     }
 
     def move(src: File): Unit = ()
