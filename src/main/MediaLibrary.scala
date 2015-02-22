@@ -6,7 +6,7 @@ object MediaLibrary extends Base {
 
     val mediaLibraryFolder: File = new File(ex(MediaManager.settings.get("lib_folder")))
 
-    val processingList = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
+    val processingList = new File(ex(MediaManager.settings.get("processed_dir")))
 
     def retrieveFiles(): Unit = {
         val showFolders:Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)
@@ -15,7 +15,10 @@ object MediaLibrary extends Base {
         showFolders.foreach{ case (t: String, f: File) => println(f.getAbsolutePath) }
     }
 
-    def move(src: File): Unit = ()
+    def move(src: File): Unit = {
+        processingList.listFiles.toList.foreach(println)
+        //need to do some title matching with media folders
+    }
 
     def refresh(): Unit = Downloader.download("http://" + ex(MediaManager.settings.get("lib_host")) + ":" +
         ex(MediaManager.settings.get("lib_port")) + ex(MediaManager.settings.get("lib_path")))
