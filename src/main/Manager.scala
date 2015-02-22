@@ -16,7 +16,7 @@ object Manager extends Base {
 
     val fileList = new File(ex(MediaManager.settings.get("video_dir"))).listFiles.toList
 
-    val processingList = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
+    val processingList = new File(ex(MediaManager.settings.get("processed_dir")))
 
     def rename(file: File): Unit =
         Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
@@ -69,6 +69,6 @@ object Manager extends Base {
 
     def cleanupFolder(): Unit = fileList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
 
-    def processFolder(): Unit = processingList.foreach(rename)
+    def processFolder(): Unit = processingList.listFiles.toList.foreach(rename)
     
 }
