@@ -11,7 +11,7 @@ object MediaLibrary extends Base {
     def retrieveFiles(): Unit = {
         val showFolders: Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)
             .map(d => d.getName -> d).toList: _*)
-        
+
         processingList.foreach{ f =>
             showFolders.foreach { case (d: String, dir: File) =>
                 if (f.getName.toLowerCase.contains(d.toLowerCase)) {
