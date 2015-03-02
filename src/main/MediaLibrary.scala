@@ -29,6 +29,11 @@ object MediaLibrary extends Base {
         srcFIS.close()
     }
 
+    def move(src: File, dest: File): Unit = {
+        copy(src, dest)
+        src.delete
+    }
+
     def refresh(): Unit = Downloader.download("http://" + ex(MediaManager.settings.get("lib_host")) + ":" +
         ex(MediaManager.settings.get("lib_port")) + ex(MediaManager.settings.get("lib_path")))
 
