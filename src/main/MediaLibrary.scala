@@ -15,7 +15,7 @@ object MediaLibrary extends Base {
         processingList.foreach{ f =>
             showFolders.foreach { case (d: String, dir: File) =>
                 if (f.getName.toLowerCase.contains(d.toLowerCase)) {
-                    copy(f, new File(dir.getAbsolutePath + "\\" + f.getName))
+                    move(f, new File(dir.getAbsolutePath + "\\" + f.getName))
                 }
             }
         }
