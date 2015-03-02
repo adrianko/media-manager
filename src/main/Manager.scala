@@ -47,7 +47,7 @@ object Manager extends Base {
         files.foreach { f: File =>
 
             // match files in keep list to files found in directory
-            keepList.keys.foreach { t =>
+            keepList.keys.foreach { t: String =>
                 val fileName: String = f.getName.toLowerCase
 
                 if (f.isFile) {
