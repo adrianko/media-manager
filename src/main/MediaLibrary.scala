@@ -6,7 +6,7 @@ object MediaLibrary extends Base {
 
     val mediaLibraryFolder: File = new File(ex(MediaManager.settings.get("lib_folder")))
 
-    lazy val processingList = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
+    lazy val processingList: List[File] = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
 
     def retrieveFiles(): Unit = {
         val showFolders: Map[String, File] = Map(mediaLibraryFolder.listFiles.filter(_.isDirectory)

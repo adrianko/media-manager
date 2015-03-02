@@ -14,9 +14,9 @@ object Manager extends Base {
         "deleteDir" -> List("sample")
     )
 
-    val fileList = new File(ex(MediaManager.settings.get("video_dir")))
+    val fileList: File = new File(ex(MediaManager.settings.get("video_dir")))
 
-    lazy val processingList = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
+    lazy val processingList: List[File] = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
 
     def rename(file: File): Unit =
         Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
