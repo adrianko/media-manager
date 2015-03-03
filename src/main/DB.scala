@@ -43,7 +43,7 @@ object DB extends Base {
                 .map(x => (x.getString("title"), x.getInt("quality"))).toMap
         } catch {
             case e: SQLException =>
-                e.printStackTrace()
+                e.printStackTrace() 
                 Map[String, Int]()
         }
     }
