@@ -41,8 +41,7 @@ object Downloader extends Base {
     
     def clearFinished(): Unit = {
         val queue: JSONArray = Downloader.getQueue
-
-        //JSON array doesn't support foreach. Maybe use an iterator?
+        
         for (i: Int <- 0 to (queue.size() - 1)) {
             val t = queue.get(i).asInstanceOf[JSONArray]
 
