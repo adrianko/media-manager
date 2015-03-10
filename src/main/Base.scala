@@ -13,6 +13,11 @@ class Base {
         case None => ""
     }
 
+    def exInt(x: Option[Int]) = x match {
+        case Some(i) => i
+        case None => null
+    }
+
     def exList(x: Option[List[String]]) = x match {
         case Some(s) => s
         case None => List()
