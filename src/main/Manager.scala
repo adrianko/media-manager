@@ -53,7 +53,10 @@ object Manager extends Base {
                 if (f.isFile) {
                     if (fileName.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
                         exList(fileDirSettings.get("keepExt")).contains(fileExt(f)))) {
-                        processing += f
+                        if ((exInt(keepList.get(t)) == 1 && fileName.toLowerCase.contains("1080p")) ||
+                            (exInt(keepList.get(t)) == 0 && fileName.toLowerCase.contains("hdtv"))) {
+                            processing += f
+                        }
                     } else if (exList(fileDirSettings.get("deleteExt")).contains(fileExt(f))) {
                         f.delete
                     }
