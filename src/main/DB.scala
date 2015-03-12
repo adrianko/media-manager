@@ -28,8 +28,8 @@ object DB extends Base {
 
     def loadSettings: Map[String, String] = {
         try {
-            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM settings"))
-                .map(x => (x.getString("property"), x.getString("value"))).toMap
+            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM settings")).map(x => (
+                    x.getString("property"), x.getString("value"))).toMap
         } catch {
             case e: SQLException =>
                 e.printStackTrace()
@@ -39,8 +39,8 @@ object DB extends Base {
 
     def getKeepList: Map[String, Int] = {
         try {
-            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM keep"))
-                .map(x => (x.getString("title"), x.getInt("quality"))).toMap
+            new ResultSetIterator(getStatement.executeQuery("SELECT * FROM keep")).map(x => (x.getString("title"), 
+                    x.getInt("quality"))).toMap
         } catch {
             case e: SQLException =>
                 e.printStackTrace() 

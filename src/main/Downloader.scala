@@ -15,8 +15,8 @@ object Downloader extends Base {
     def complete(msg: String): Boolean = seedingMessage.contains(msg)
 
     def getURL(params: String): String =
-        "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + "/gui/?" +
-            params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
+        "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + 
+                "/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
     
     def getStatus: String = download(getURL("1=1"))
     
@@ -37,7 +37,8 @@ object Downloader extends Base {
         sendAction(hash, "remove")
     }
     
-    def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents").asInstanceOf[JSONArray]
+    def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
+            .asInstanceOf[JSONArray]
     
     def clearFinished(): Unit = {
         val queue: JSONArray = Downloader.getQueue

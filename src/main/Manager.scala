@@ -74,7 +74,8 @@ object Manager extends Base {
         processing.toSet
     }
 
-    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => f.delete)
+    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => 
+        f.delete)
 
     def processFolder(): Unit = processingList.foreach(rename)
     

@@ -4,7 +4,6 @@ package main
  * MediaManager class
  * TODO Process files to be kept
  * TODO SD files move to sync and library
- * TODO HD files straight to library
  */
 object MediaManager extends Base {
 
