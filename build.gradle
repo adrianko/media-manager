@@ -1,24 +1,27 @@
 apply plugin: 'scala'
-apply plugin: 'java'
 
 repositories {
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
+    compile group: 'org.scala-lang', name: 'scala-compiler', version: '2.11.4'
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.4'
     compile group: 'org.xerial', name: 'sqlite-jdbc', version: '3.8.7'
-    compile group: 'org.jsoup', name: 'jsoup', version: '1.8.1'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 }
 
 sourceSets {
     main {
-        java {
+        scala {
             srcDir 'src'
         }
     }
 }
 
-task execute(type: JavaExec) {
-    main = 'main.Manager'
+task execute(type: JavaExec, dependsOn: classes) {
+    main = 'main.MediaManager'
     classpath = sourceSets.main.runtimeClasspath
+    classpath configurations.runtime
 }
