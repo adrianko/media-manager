@@ -2,8 +2,6 @@ package main
 
 /**
  * MediaManager class
- * TODO Process files to be kept
- * TODO SD files move to sync and library
  */
 object MediaManager extends Base {
 
@@ -17,13 +15,7 @@ object MediaManager extends Base {
     
     def MediaManager(): Unit = {
         Downloader.clearFinished()
-        Manager.retrieveFiles().foreach{ f =>
-            if (f.getName.toLowerCase.contains("1080p")) {
-                Manager.move(f.getAbsoluteFile)
-            } else {
-                Manager.copy(f.getAbsoluteFile)
-            }
-        }
+        Manager.retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
         Manager.processFolder()
         Manager.cleanupFolder()
         MediaLibrary.retrieveFiles()
