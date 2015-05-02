@@ -7,6 +7,8 @@ import scala.io.Source.fromInputStream
 class Base {
 
     val path: String = new File(getClass.getResource(".").getFile).getAbsolutePath + "/../../../../"
+
+    val isWindows: Boolean = System.getProperty("os.name").contains("Windows")
     
     def ex(x: Option[String]) = x match {
         case Some(s) => s
@@ -29,17 +31,17 @@ class Base {
     }
     
     def checkOS(): Unit = {
-        if (!System.getProperty("os.name").contains("Windows")) {
+        if (!isWindows) {
             println("This application is not designed to run on any operating system other than Windows. Sorry.")
             exit(0)
         }
     }
-    
+
     def checkService(): Unit = {
         try {
             if (!fromInputStream(Runtime.getRuntime.exec("tasklist.exe").getInputStream).getLines().mkString
                     .contains(ex(MediaManager.settings.get("dl_exe")))) {
-                println("Service not running. Sorry.")
+                println("Service not running. Doing nothing...")
                 exit(0)
             }
         } catch {
