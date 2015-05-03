@@ -54,7 +54,8 @@ object Manager extends Base {
                     if (fileName.contains(t.toLowerCase.replace(" ", ".")) && (isVideoFile(f) ||
                         exList(fileDirSettings.get("keepExt")).contains(fileExt(f)))) {
                         if ((exInt(keepList.get(t)) == 1 && fileName.toLowerCase.contains("1080p")) ||
-                            (exInt(keepList.get(t)) == 0 && fileName.toLowerCase.contains("hdtv"))) {
+                            (exInt(keepList.get(t)) == 0 && fileName.toLowerCase.contains("hdtv")) ||
+                            (exInt(keepList.get(t)) == 2 && fileName.toLowerCase.contains("720p"))) {
                             processing += f
                         }
                     } else if (exList(fileDirSettings.get("deleteExt")).contains(fileExt(f))) {
