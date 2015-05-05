@@ -18,9 +18,9 @@ object Manager extends Base {
 
     lazy val processingList: List[File] = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
 
-    def rename(file: File): Unit =
-        Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", "\"{n} - {s00e00} - {t}\"", "-non-strict",
-            "--db", "TVRage", "--output", "\"" + ex(MediaManager.settings.get("processed_dir")) + "\"").!
+    def rename(file: File): Unit = Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", 
+        "\"{n} - {s00e00} - {t}\"", "-non-strict", "--db", "TVRage", "--output", "\"" + ex(MediaManager.settings
+        .get("processed_dir")) + "\"").!
     
     def copy(src: File): Unit = {
         val srcFIS = new FileInputStream(src)
