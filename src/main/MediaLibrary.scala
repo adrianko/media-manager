@@ -21,7 +21,10 @@ object MediaLibrary extends Base {
         }
     }
 
-    def copy(src: File, dest: File): Unit = {
+    def refresh(): Unit = Downloader.download("http://" + ex(MediaManager.settings.get("lib_host")) + ":" +
+            ex(MediaManager.settings.get("lib_port")) + ex(MediaManager.settings.get("lib_path")))
+
+    private def copy(src: File, dest: File): Unit = {
         val srcFIS = new FileInputStream(src)
         val destFIS = new FileOutputStream(dest)
         destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
@@ -29,12 +32,9 @@ object MediaLibrary extends Base {
         srcFIS.close()
     }
 
-    def move(src: File, dest: File): Unit = {
+    private def move(src: File, dest: File): Unit = {
         copy(src, dest)
         src.delete
     }
-
-    def refresh(): Unit = Downloader.download("http://" + ex(MediaManager.settings.get("lib_host")) + ":" +
-        ex(MediaManager.settings.get("lib_port")) + ex(MediaManager.settings.get("lib_path")))
 
 }

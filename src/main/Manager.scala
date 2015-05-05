@@ -6,7 +6,7 @@ import sys.process._
 
 object Manager extends Base {
 
-    val fileDirSettings: Map[String, List[String]] = Map[String, List[String]](
+    private val fileDirSettings: Map[String, List[String]] = Map[String, List[String]](
         "deleteExt" -> List("txt", "nfo"),
         "videoFileExt" -> List("mp4", "mkv"),
         "keepExt" -> List("srt"),
@@ -18,11 +18,18 @@ object Manager extends Base {
 
     lazy val processingList: List[File] = new File(ex(MediaManager.settings.get("processed_dir"))).listFiles.toList
 
-    def rename(file: File): Unit = Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", 
+    def moveFiles(): Unit = retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
+
+    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f =>
+        f.delete)
+
+    def processFolder(): Unit = processingList.foreach(rename)
+
+    private def rename(file: File): Unit = Seq("filebot", "-rename", file.getAbsoluteFile.toString, "--format", 
         "\"{n} - {s00e00} - {t}\"", "-non-strict", "--db", "TVRage", "--output", "\"" + ex(MediaManager.settings
         .get("processed_dir")) + "\"").!
     
-    def copy(src: File): Unit = {
+    private def copy(src: File): Unit = {
         val srcFIS = new FileInputStream(src)
         val destFIS = new FileOutputStream(new File(ex(MediaManager.settings.get("processed_dir")) + "/" + src.getName))
         destFIS.getChannel.transferFrom(srcFIS.getChannel, 0, Long.MaxValue)
@@ -30,18 +37,18 @@ object Manager extends Base {
         srcFIS.close()
     }
 
-    def move(src: File): Unit = {
+    private def move(src: File): Unit = {
         copy(src)
         src.delete
     }
 
-    def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
+    private def fileExt(f: File): String = f.getName.toLowerCase.substring(f.getName.lastIndexOf(".") + 1)
 
-    def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFileExt")).contains(fileExt(f)) && f.isFile
+    private def isVideoFile(f: File): Boolean = exList(fileDirSettings.get("videoFileExt")).contains(fileExt(f)) && f.isFile
     
-    def retrieveFiles(): Set[File] = retrieveFiles(fileList.listFiles.toList, DB.getKeepList)
+    private def retrieveFiles(): Set[File] = retrieveFiles(fileList.listFiles.toList, DB.getKeepList)
 
-    def retrieveFiles(files: List[File], keepList: Map[String, Int]): Set[File] = {
+    private def retrieveFiles(files: List[File], keepList: Map[String, Int]): Set[File] = {
         val processing: collection.mutable.Set[File] = collection.mutable.Set[File]()
 
         files.foreach { f: File =>
@@ -74,10 +81,5 @@ object Manager extends Base {
 
         processing.toSet
     }
-
-    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f => 
-        f.delete)
-
-    def processFolder(): Unit = processingList.foreach(rename)
     
 }
