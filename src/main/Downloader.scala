@@ -14,31 +14,6 @@ object Downloader extends Base {
     
     def complete(msg: String): Boolean = seedingMessage.contains(msg)
 
-    def getURL(params: String): String =
-        "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + ex(MediaManager.settings.get("dl_port")) + 
-                "/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + System.currentTimeMillis
-    
-    def getStatus: String = download(getURL("1=1"))
-    
-    def sendAction(hash: String, action: String): String = download(getURL("action=" + action + "&hash=" + hash))
-    
-    def download(url: String): String = {
-        val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
-        con.setRequestMethod("GET")
-        con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.settings
-                .get("dl_user")) + ":" + ex(MediaManager.settings.get("dl_pass"))).getBytes)))
-        
-        fromInputStream(con.getContent.asInstanceOf[InputStream]).getLines().mkString
-    }
-
-    def clear(hash: String): Unit = {
-        sendAction(hash, "stop")
-        sendAction(hash, "remove")
-    }
-    
-    def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
-            .asInstanceOf[JSONArray]
-    
     def clearFinished(): Unit = {
         val queue: JSONArray = Downloader.getQueue
 
@@ -50,5 +25,30 @@ object Downloader extends Base {
             }
         }
     }
+
+    private def getURL(params: String): String = "http://" + ex(MediaManager.settings.get("dl_host")) + ":" + 
+        ex(MediaManager.settings.get("dl_port")) + "/gui/?" + params + "&list=1&cid=0&getmsg=1&t=" + 
+        System.currentTimeMillis
+    
+    private def getStatus: String = download(getURL("1=1"))
+    
+    private def sendAction(hash: String, action: String): String = download(getURL("action=" + action + "&hash=" + hash))
+    
+    private def download(url: String): String = {
+        val con: HttpURLConnection  = new URL(url).openConnection().asInstanceOf[HttpURLConnection]
+        con.setRequestMethod("GET")
+        con.setRequestProperty("Authorization", "Basic " + new String(Base64.getEncoder.encode((ex(MediaManager.settings
+                .get("dl_user")) + ":" + ex(MediaManager.settings.get("dl_pass"))).getBytes)))
+        
+        fromInputStream(con.getContent.asInstanceOf[InputStream]).getLines().mkString
+    }
+
+    private def clear(hash: String): Unit = {
+        sendAction(hash, "stop")
+        sendAction(hash, "remove")
+    }
+    
+    private def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
+            .asInstanceOf[JSONArray]
 
 }
