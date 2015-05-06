@@ -4,7 +4,7 @@ import java.sql.{Connection, Statement, DriverManager, SQLException, ResultSet}
 
 object DB extends Base {
 
-    val dbPath: String = path + "db/config.db";
+    val dbPath: String = path + "db/config.db"
     var conn: Connection = null
     var stmt: Statement = null
 
