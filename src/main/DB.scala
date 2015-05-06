@@ -4,6 +4,7 @@ import java.sql.{Connection, Statement, DriverManager, SQLException, ResultSet}
 
 object DB extends Base {
 
+    val dbPath: String = path + "db/config.db";
     var conn: Connection = null
     var stmt: Statement = null
 
@@ -11,7 +12,7 @@ object DB extends Base {
         if (conn == null) {
             try {
                 Class.forName("org.sqlite.JDBC")
-                conn = DriverManager.getConnection("jdbc:sqlite:" + path + "db/config.db")
+                conn = DriverManager.getConnection("jdbc:sqlite:" + dbPath)
             } catch {
                 case e: SQLException => e.printStackTrace()
             }
