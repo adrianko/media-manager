@@ -11,6 +11,7 @@ import org.json.simple.parser.JSONParser
 object Downloader extends Base {
     
     val seedingMessage: List[String] = List("Seeding 100.0 %", "[F] Seeding 100.0 %")
+    var correctLabel: Boolean = false
     
     def complete(msg: String): Boolean = seedingMessage.contains(msg)
 
@@ -21,6 +22,10 @@ object Downloader extends Base {
             val t = queue.get(i).asInstanceOf[JSONArray]
 
             if (Downloader.complete(t.get(21).toString)) {
+                if (t.get(11).toString.equals("tv") || t.get(11).toString.equals("movie")) {
+                    correctLabel = true    
+                }
+                
                 Downloader.clear(t.get(0).toString)
             }
         }
