@@ -22,10 +22,7 @@ object Downloader extends Base {
             val t = queue.get(i).asInstanceOf[JSONArray]
 
             if (Downloader.complete(t.get(21).toString)) {
-                if (t.get(11).toString.equals("tv") || t.get(11).toString.equals("movie")) {
-                    correctLabel = true    
-                }
-                
+                correctLabel = t.get(11).toString.equals("tv") || t.get(11).toString.equals("movie")
                 Downloader.clear(t.get(0).toString)
             }
         }
