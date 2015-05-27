@@ -20,7 +20,7 @@ object Manager extends Base {
 
     def moveFiles(): Unit = retrieveFiles().foreach{ f => Manager.move(f.getAbsoluteFile) }
 
-    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.length == 0).foreach(f =>
+    def cleanupFolder(): Unit = fileList.listFiles.toList.filter(f => f.isDirectory && f.list.isEmpty).foreach(f =>
         f.delete)
 
     def processFolder(): Unit = processingList.foreach(rename)
