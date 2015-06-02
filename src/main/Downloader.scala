@@ -1,6 +1,6 @@
 package main
 
-import java.io.InputStream
+import java.io.{File, InputStream}
 import java.net.{HttpURLConnection, URL}
 import java.util.Base64
 
@@ -11,7 +11,8 @@ import org.json.simple.parser.JSONParser
 object Downloader extends Base {
     
     val seedingMessage: List[String] = List("Seeding 100.0 %", "[F] Seeding 100.0 %")
-    var correctLabel: Boolean = false
+    val cleared: collection.mutable.Map[String, collection.mutable.Set[File]] = collection.mutable.Map[String, 
+      collection.mutable.Set[File]]("tv" -> collection.mutable.Set(), "movie" -> collection.mutable.Set())
     
     def complete(msg: String): Boolean = seedingMessage.contains(msg)
 
@@ -19,11 +20,16 @@ object Downloader extends Base {
         val queue: JSONArray = Downloader.getQueue
 
         for (i: Int <- 0 to (queue.size() - 1)) {
-            val t = queue.get(i).asInstanceOf[JSONArray]
+            val t: JSONArray = queue.get(i).asInstanceOf[JSONArray]
+            val hash: String = t.get(0).toString
+            val label: String = t.get(11).toString
+            val status: String = t.get(21).toString
 
-            if (Downloader.complete(t.get(21).toString)) {
-                correctLabel = t.get(11).toString.equals("tv") || t.get(11).toString.equals("movie")
-                Downloader.clear(t.get(0).toString)
+            if (Downloader.complete(status)) {
+                if (Set("tv", "movie").contains(label)) {
+                }
+                
+                Downloader.clear(hash)
             }
         }
     }
