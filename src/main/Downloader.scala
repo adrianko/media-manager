@@ -49,12 +49,11 @@ object Downloader extends Base {
     
     private def getStatus: String = download(getURL("1=1"))
     
-    private def sendAction(hash: String, action: String): String = download(getURL("action=" + action + "&hash=" + hash))
-    
+    private def send(action: String, hash: String): String = download(getURL("action=" + action + "&hash=" + hash))
 
     private def clear(hash: String): Unit = {
-        sendAction(hash, "stop")
-        sendAction(hash, "remove")
+        send("stop", hash)
+        send("remove", hash)
     }
     
     private def getQueue: JSONArray = new JSONParser().parse(getStatus).asInstanceOf[JSONObject].get("torrents")
