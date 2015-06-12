@@ -19,7 +19,7 @@ object Downloader extends Base {
     def clearFinished(): Unit = {
         val queue: JSONArray = Downloader.getQueue
 
-        for (i: Int <- 0 to (queue.size() - 1)) {
+        Range(0, queue.size()).foreach(i => {
             val t: JSONArray = queue.get(i).asInstanceOf[JSONArray]
             val hash: String = t.get(0).toString
             val label: String = t.get(11).toString
@@ -28,10 +28,10 @@ object Downloader extends Base {
             if (Downloader.complete(status)) {
                 if (Set("tv", "movie").contains(label)) {
                 }
-                
+
                 Downloader.clear(hash)
             }
-        }
+        })
     }
 
     def download(url: String): String = {
