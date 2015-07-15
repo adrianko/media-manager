@@ -2,6 +2,8 @@ package main
 
 /**
  * MediaManager class
+ * 
+ * TODO add kill t process when cleared equals queue size
  */
 object MediaManager extends Base {
 

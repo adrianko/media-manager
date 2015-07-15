@@ -18,7 +18,8 @@ object Downloader extends Base {
 
     def clearFinished(): Unit = {
         val queue: JSONArray = Downloader.getQueue
-
+        var cleared = 0
+        
         Range(0, queue.size()).foreach(i => {
             val t: JSONArray = queue.get(i).asInstanceOf[JSONArray]
             val hash: String = t.get(0).toString
@@ -30,8 +31,13 @@ object Downloader extends Base {
                 }
 
                 Downloader.clear(hash)
+                cleared += 1
             }
         })
+        
+        if (cleared == queue.size()) {
+            //kill t process
+        }
     }
 
     def download(url: String): String = {
